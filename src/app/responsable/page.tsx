@@ -1,0 +1,395 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { Trash2, FileDown, ShieldCheck, AlertCircle, Newspaper, Briefcase, Plus, X, Image as ImageIcon } from "lucide-react";
+
+interface Member {
+  id: number;
+  firstName: string;
+  lastName: string;
+  promo: string;
+  job: string;
+  isNew?: boolean;
+}
+
+interface NewsItem {
+  id: number;
+  title: string;
+  date: string;
+  desc: string;
+  img: string;
+}
+
+interface JobOffer {
+  id: number;
+  title: string;
+  company: string;
+  location: string;
+  salary: string;
+  type: string;
+}
+
+export default function Responsable() {
+  const [activeTab, setActiveTab] = useState("members");
+  const [members, setMembers] = useState<Member[]>([]);
+  const [news, setNews] = useState<NewsItem[]>([]);
+  const [jobs, setJobs] = useState<JobOffer[]>([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+
+  // Form states
+  const [newArticle, setNewArticle] = useState({ title: "", desc: "", img: "" });
+  const [newJob, setNewJob] = useState({ title: "", company: "", location: "", salary: "", type: "CDI" });
+
+  const defaultMembers: Member[] = [
+    { id: 1, firstName: "Jean", lastName: "DUPONT", promo: "2020", job: "Développeur Web" },
+    { id: 2, firstName: "Marie", lastName: "CURIE", promo: "2018", job: "Data Scientist" },
+    { id: 3, firstName: "Thomas", lastName: "SANKARA", promo: "2015", job: "Chef de Projet" },
+    { id: 4, firstName: "Alice", lastName: "WONDER", promo: "2022", job: "Designer UX" },
+  ];
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = () => {
+    const storedMembers = JSON.parse(localStorage.getItem("usp_members") || "[]");
+    const storedNews = JSON.parse(localStorage.getItem("usp_news") || "[]");
+    const storedJobs = JSON.parse(localStorage.getItem("usp_jobs") || "[]");
+    
+    setMembers([...storedMembers, ...defaultMembers]);
+    setNews(storedNews);
+    setJobs(storedJobs);
+  };
+
+  const deleteMember = (id: number) => {
+    if (confirm("Voulez-vous vraiment supprimer ce membre ?")) {
+      const storedMembers = JSON.parse(localStorage.getItem("usp_members") || "[]");
+      const updatedStored = storedMembers.filter((m: Member) => m.id !== id);
+      localStorage.setItem("usp_members", JSON.stringify(updatedStored));
+      loadData();
+    }
+  };
+
+  const deleteNews = (id: number) => {
+    if (confirm("Supprimer cette actualité ?")) {
+      const updated = news.filter(n => n.id !== id);
+      localStorage.setItem("usp_news", JSON.stringify(updated));
+      setNews(updated);
+    }
+  };
+
+  const deleteJob = (id: number) => {
+    if (confirm("Supprimer cette offre ?")) {
+      const updated = jobs.filter(j => j.id !== id);
+      localStorage.setItem("usp_jobs", JSON.stringify(updated));
+      setJobs(updated);
+    }
+  };
+
+  const addNews = (e: React.FormEvent) => {
+    e.preventDefault();
+    const item = { 
+      ...newArticle, 
+      id: Date.now(), 
+      date: "Aujourd'hui",
+      img: newArticle.img || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=400&h=250&auto=format&fit=crop" 
+    };
+    const updated = [item, ...news];
+    localStorage.setItem("usp_news", JSON.stringify(updated));
+    setNews(updated);
+    setNewArticle({ title: "", desc: "", img: "" });
+  };
+
+  const addJob = (e: React.FormEvent) => {
+    e.preventDefault();
+    const item = { ...newJob, id: Date.now() };
+    const updated = [item, ...jobs];
+    localStorage.setItem("usp_jobs", JSON.stringify(updated));
+    setJobs(updated);
+    setNewJob({ title: "", company: "", location: "", salary: "", type: "CDI" });
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === "admin123") {
+      setIsAuthenticated(true);
+    } else {
+      alert("Mot de passe incorrect");
+    }
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 px-4">
+        <div className="max-w-md w-full bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+          <div className="text-center mb-8">
+            <div className="mx-auto w-12 h-12 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center mb-4">
+              <ShieldCheck size={24} />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900">Accès Responsable</h2>
+            <p className="text-sm text-gray-500 mt-2">Veuillez saisir votre mot de passe pour accéder à la gestion.</p>
+          </div>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <input
+                type="password"
+                placeholder="Mot de passe"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <button type="submit" className="w-full bg-sky-500 text-white font-bold py-3 rounded-lg hover:bg-sky-600 transition-colors">
+              Se connecter
+            </button>
+          </form>
+          <div className="mt-6 p-4 bg-amber-50 border border-amber-100 rounded-lg flex items-start gap-3">
+            <AlertCircle className="text-amber-500 flex-shrink-0" size={18} />
+            <p className="text-[12px] text-amber-700">Note: Le mot de passe par défaut pour le test est <strong>admin123</strong>.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6 print:hidden">
+        <div>
+          <h1 className="text-4xl font-black text-gray-900 tracking-tight">Espace Responsable</h1>
+          <p className="text-gray-500 font-medium">Gestion centralisée du réseau USP-ALUMINI.</p>
+        </div>
+        <div className="flex gap-4">
+          <button
+            onClick={handlePrint}
+            className="flex items-center gap-2 bg-white text-gray-900 border-2 border-gray-100 px-6 py-3 rounded-2xl font-black hover:bg-gray-50 transition-all shadow-xl shadow-gray-200/50"
+          >
+            <FileDown size={20} />
+            Exporter PDF
+          </button>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex bg-gray-100 p-1.5 rounded-[2rem] mb-10 max-w-2xl print:hidden">
+        <button 
+          onClick={() => setActiveTab("members")}
+          className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-[1.5rem] font-black text-sm transition-all ${activeTab === "members" ? 'bg-white text-sky-500 shadow-md' : 'text-gray-500 hover:text-gray-700'}`}
+        >
+          <ShieldCheck size={18} />
+          Membres
+        </button>
+        <button 
+          onClick={() => setActiveTab("news")}
+          className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-[1.5rem] font-black text-sm transition-all ${activeTab === "news" ? 'bg-white text-sky-500 shadow-md' : 'text-gray-500 hover:text-gray-700'}`}
+        >
+          <Newspaper size={18} />
+          Actualités
+        </button>
+        <button 
+          onClick={() => setActiveTab("jobs")}
+          className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-[1.5rem] font-black text-sm transition-all ${activeTab === "jobs" ? 'bg-white text-sky-500 shadow-md' : 'text-gray-500 hover:text-gray-700'}`}
+        >
+          <Briefcase size={18} />
+          Emplois
+        </button>
+      </div>
+
+      {/* Tab Content: Members */}
+      {activeTab === "members" && (
+        <div className="bg-white rounded-[2.5rem] shadow-2xl border border-gray-100 overflow-hidden print:shadow-none print:border-none">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead className="bg-gray-50 print:bg-white border-b border-gray-200">
+                <tr>
+                  <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest">Nom & Prénom</th>
+                  <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest">Promotion</th>
+                  <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest">Formation / Métier</th>
+                  <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest text-right print:hidden">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {members.map((member) => (
+                  <tr key={member.id} className="hover:bg-gray-50/50 transition-colors print:hover:bg-transparent">
+                    <td className="px-8 py-5 whitespace-nowrap">
+                      <div className="font-black text-gray-900">{member.lastName} {member.firstName}</div>
+                    </td>
+                    <td className="px-8 py-5 whitespace-nowrap">
+                      <span className="px-3 py-1 bg-sky-50 text-sky-600 rounded-full text-[10px] font-black uppercase tracking-widest">Promo {member.promo}</span>
+                    </td>
+                    <td className="px-8 py-5 whitespace-nowrap text-gray-500 font-bold text-sm">
+                      {member.job}
+                    </td>
+                    <td className="px-8 py-5 whitespace-nowrap text-right print:hidden">
+                      <button
+                        onClick={() => deleteMember(member.id)}
+                        className="text-red-400 hover:text-red-600 p-3 hover:bg-red-50 rounded-2xl transition-all"
+                      >
+                        <Trash2 size={20} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Tab Content: News */}
+      {activeTab === "news" && (
+        <div className="space-y-10">
+          <form onSubmit={addNews} className="bg-white p-10 rounded-[2.5rem] shadow-2xl border border-gray-100 space-y-6">
+            <h3 className="text-xl font-black text-gray-900 flex items-center gap-2">
+              <Plus className="text-sky-500" />
+              Publier une Actualité
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Titre de l'article</label>
+                <input 
+                  type="text" 
+                  required
+                  placeholder="Ex: Nouveau succès pour l'USP..."
+                  className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 font-bold"
+                  value={newArticle.title}
+                  onChange={e => setNewArticle({...newArticle, title: e.target.value})}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">URL Image (Optionnel)</label>
+                <div className="relative">
+                  <ImageIcon className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                  <input 
+                    type="text" 
+                    placeholder="https://images.unsplash.com/..."
+                    className="w-full pl-14 pr-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 font-bold"
+                    value={newArticle.img}
+                    onChange={e => setNewArticle({...newArticle, img: e.target.value})}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Contenu de l'article</label>
+              <textarea 
+                required
+                rows={4}
+                placeholder="Rédigez votre article ici..."
+                className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 font-bold"
+                value={newArticle.desc}
+                onChange={e => setNewArticle({...newArticle, desc: e.target.value})}
+              ></textarea>
+            </div>
+            <button type="submit" className="bg-sky-500 text-white px-8 py-4 rounded-2xl font-black hover:bg-sky-600 transition-all shadow-xl shadow-sky-500/20 transform active:scale-95">
+              Publier l'actualité
+            </button>
+          </form>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {news.map(item => (
+              <div key={item.id} className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-xl flex items-center justify-between group">
+                <div className="flex items-center gap-4">
+                  <img src={item.img} className="w-16 h-16 rounded-2xl object-cover" alt="" />
+                  <div>
+                    <h4 className="font-black text-gray-900 line-clamp-1">{item.title}</h4>
+                    <p className="text-xs text-gray-400 font-bold">{item.date}</p>
+                  </div>
+                </div>
+                <button onClick={() => deleteNews(item.id)} className="text-red-400 hover:text-red-600 p-3 hover:bg-red-50 rounded-2xl transition-all">
+                  <Trash2 size={20} />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Tab Content: Jobs */}
+      {activeTab === "jobs" && (
+        <div className="space-y-10">
+          <form onSubmit={addJob} className="bg-white p-10 rounded-[2.5rem] shadow-2xl border border-gray-100 space-y-6">
+            <h3 className="text-xl font-black text-gray-900 flex items-center gap-2">
+              <Plus className="text-sky-500" />
+              Ajouter une Offre d'Emploi
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Intitulé du poste</label>
+                <input 
+                  type="text" required placeholder="Ex: Développeur React"
+                  className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 font-bold"
+                  value={newJob.title}
+                  onChange={e => setNewJob({...newJob, title: e.target.value})}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Entreprise</label>
+                <input 
+                  type="text" required placeholder="Ex: Tech Start"
+                  className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 font-bold"
+                  value={newJob.company}
+                  onChange={e => setNewJob({...newJob, company: e.target.value})}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Localisation</label>
+                <input 
+                  type="text" required placeholder="Ex: Paris"
+                  className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 font-bold"
+                  value={newJob.location}
+                  onChange={e => setNewJob({...newJob, location: e.target.value})}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Salaire (Optionnel)</label>
+                <input 
+                  type="text" placeholder="Ex: 45k - 50k"
+                  className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 font-bold"
+                  value={newJob.salary}
+                  onChange={e => setNewJob({...newJob, salary: e.target.value})}
+                />
+              </div>
+            </div>
+            <button type="submit" className="bg-sky-500 text-white px-8 py-4 rounded-2xl font-black hover:bg-sky-600 transition-all shadow-xl shadow-sky-500/20 transform active:scale-95">
+              Ajouter l'offre
+            </button>
+          </form>
+
+          <div className="space-y-4">
+            {jobs.map(job => (
+              <div key={job.id} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-xl flex items-center justify-between">
+                <div className="flex items-center gap-6">
+                  <div className="w-12 h-12 bg-sky-50 rounded-xl flex items-center justify-center text-sky-500">
+                    <Briefcase size={22} />
+                  </div>
+                  <div>
+                    <h4 className="font-black text-gray-900">{job.title}</h4>
+                    <p className="text-xs text-sky-600 font-bold">{job.company} • {job.location}</p>
+                  </div>
+                </div>
+                <button onClick={() => deleteJob(job.id)} className="text-red-400 hover:text-red-600 p-3 hover:bg-red-50 rounded-2xl transition-all">
+                  <Trash2 size={20} />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      
+      <style jsx global>{`
+        @media print {
+          body * { visibility: hidden; }
+          .max-w-7xl, .max-w-7xl * { visibility: visible; }
+          .max-w-7xl { position: absolute; left: 0; top: 0; width: 100%; }
+          .print\\:hidden, nav, footer, .max-w-2xl { display: none !important; }
+        }
+      `}</style>
+    </div>
+  );
+}
