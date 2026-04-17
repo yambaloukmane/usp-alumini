@@ -89,8 +89,13 @@ export default function Register() {
     const existingMembers = JSON.parse(localStorage.getItem("usp_members") || "[]");
     localStorage.setItem("usp_members", JSON.stringify([newMember, ...existingMembers]));
 
+    // Connexion automatique de l'utilisateur
+    localStorage.setItem("usp_current_user", JSON.stringify(newMember));
+    // Déclencher la mise à jour de la Navbar
+    window.dispatchEvent(new Event("storage"));
+
     setIsSubmitting(false);
-    router.push("/login");
+    router.push("/");
   };
 
   return (

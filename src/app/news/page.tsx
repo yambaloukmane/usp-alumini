@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Calendar, MapPin, ArrowRight, Briefcase, Info, Clock, Sparkles, Newspaper } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface NewsItem {
   id: number;
@@ -21,6 +22,7 @@ interface JobOffer {
 }
 
 export default function News() {
+  const router = useRouter();
   const [news, setNews] = useState<NewsItem[]>([]);
   const [jobs, setJobs] = useState<JobOffer[]>([]);
 
@@ -45,12 +47,18 @@ export default function News() {
   ];
 
   useEffect(() => {
+    const currentUser = localStorage.getItem("usp_current_user");
+    if (!currentUser) {
+      router.push("/login");
+      return;
+    }
+
     const storedNews = JSON.parse(localStorage.getItem("usp_news") || "[]");
     const storedJobs = JSON.parse(localStorage.getItem("usp_jobs") || "[]");
     
     setNews([...storedNews, ...defaultNews]);
     setJobs([...storedJobs, ...defaultJobs]);
-  }, []);
+  }, [router]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">

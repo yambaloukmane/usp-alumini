@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Trash2, FileDown, ShieldCheck, AlertCircle, Newspaper, Briefcase, Plus, X, Image as ImageIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Member {
   id: number;
@@ -30,6 +31,7 @@ interface JobOffer {
 }
 
 export default function Responsable() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("members");
   const [members, setMembers] = useState<Member[]>([]);
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -49,8 +51,20 @@ export default function Responsable() {
   ];
 
   useEffect(() => {
+    // Check if user is logged in at all
+    const currentUser = localStorage.getItem("usp_current_user");
+    if (!currentUser) {
+      router.push("/login");
+      return;
+    }
+
     loadData();
-  }, []);
+    // Vérifier si déjà authentifié admin
+    const adminAuth = localStorage.getItem("usp_admin_authenticated");
+    if (adminAuth === "true") {
+      setIsAuthenticated(true);
+    }
+  }, [router]);
 
   const loadData = () => {
     const storedMembers = JSON.parse(localStorage.getItem("usp_members") || "[]");
@@ -118,9 +132,15 @@ export default function Responsable() {
     e.preventDefault();
     if (password === "admin123") {
       setIsAuthenticated(true);
+      localStorage.setItem("usp_admin_authenticated", "true");
     } else {
       alert("Mot de passe incorrect");
     }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem("usp_admin_authenticated");
   };
 
   if (!isAuthenticated) {
@@ -171,6 +191,13 @@ export default function Responsable() {
           >
             <FileDown size={20} />
             Exporter PDF
+          </button>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 bg-red-50 text-red-600 border-2 border-red-50 px-6 py-3 rounded-2xl font-black hover:bg-red-100 transition-all shadow-xl shadow-red-200/20"
+          >
+            <ShieldCheck size={20} />
+            Déconnexion
           </button>
         </div>
       </div>

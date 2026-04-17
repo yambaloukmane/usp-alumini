@@ -1,10 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Wallet, CreditCard, History, TrendingUp, Download, ShieldCheck, AlertCircle, PieChart, Sparkles } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Treasury() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("overview");
+
+  useEffect(() => {
+    const currentUser = localStorage.getItem("usp_current_user");
+    if (!currentUser) {
+      router.push("/login");
+    }
+  }, [router]);
 
   const payments = [
     { id: 1, type: "Cotisation Annuelle", amount: "50 €", date: "10/04/2026", status: "Payé" },

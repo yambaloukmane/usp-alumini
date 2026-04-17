@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Search, User as UserIcon, Sparkles, MapPin, Briefcase, Filter, X, ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Member {
   id: number;
@@ -18,6 +19,7 @@ interface Member {
 }
 
 export default function Members() {
+  const router = useRouter();
   const [members, setMembers] = useState<Member[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
@@ -35,9 +37,15 @@ export default function Members() {
   ];
 
   useEffect(() => {
+    const currentUser = localStorage.getItem("usp_current_user");
+    if (!currentUser) {
+      router.push("/login");
+      return;
+    }
+
     const storedMembers = JSON.parse(localStorage.getItem("usp_members") || "[]");
     setMembers([...storedMembers, ...defaultMembers]);
-  }, []);
+  }, [router]);
 
   const filteredMembers = members.filter(m => {
     const matchesSearch = `${m.firstName} ${m.lastName} ${m.job} ${m.sector || ""} ${m.city || ""} ${m.country || ""}`.toLowerCase().includes(searchQuery.toLowerCase());
