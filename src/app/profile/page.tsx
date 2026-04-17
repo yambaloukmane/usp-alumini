@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Mail, GraduationCap, BookOpen, Save, LogOut, CheckCircle, MapPin, Briefcase, AlignLeft, Camera } from "lucide-react";
+import { User, Mail, GraduationCap, BookOpen, Save, LogOut, CheckCircle, MapPin, Briefcase, AlignLeft, Camera, Phone } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -11,6 +11,7 @@ export default function Profile() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    phone: "",
     promo: "",
     job: "",
     sector: "",
@@ -30,6 +31,7 @@ export default function Profile() {
       setFormData({
         firstName: currentUser.firstName || "",
         lastName: currentUser.lastName || "",
+        phone: currentUser.phone || "",
         promo: currentUser.promo || "",
         job: currentUser.job || "",
         sector: currentUser.sector || "",
@@ -180,6 +182,20 @@ export default function Profile() {
                       className="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 outline-none transition-all font-bold text-black"
                       value={formData.lastName}
                       onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-black text-black mb-2 ml-1">Téléphone</label>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 group-focus-within:text-sky-500">
+                      <Phone size={18} />
+                    </div>
+                    <input
+                      type="tel"
+                      className="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 outline-none transition-all font-bold text-black"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     />
                   </div>
                 </div>

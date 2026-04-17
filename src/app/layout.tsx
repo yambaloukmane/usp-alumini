@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "USP-ALUMINI - Réseau des Anciens Élèves",
-  description: "Portail dynamique pour la communauté USP-ALUMINI",
+  title: "USP-ALIMNI - Réseau des Anciens Élèves",
+  description: "Portail dynamique pour la communauté USP-ALIMNI",
 };
 
 export default function RootLayout({

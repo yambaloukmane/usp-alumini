@@ -57,11 +57,11 @@ const Navbar = () => {
         <div className="px-6 lg:px-8">
           <div className="flex justify-between h-20">
             <div className="flex items-center">
-              <Link href="/" className="flex-shrink-0 flex items-center group" title="USP-ALUMINI - Accueil">
+              <Link href="/" className="flex-shrink-0 flex items-center group" title="USP-ALIMNI - Accueil">
                 <div className="relative w-14 h-14 overflow-hidden rounded-[1.25rem] border-2 border-white bg-white p-0.5 shadow-xl transition-transform group-hover:scale-110 group-active:scale-95 duration-300">
                   <Image 
                     src="https://sc01.alicdn.com/kf/A10cd1516dd12456686a3ce544d201eccS.jpeg" 
-                    alt="USP-ALUMINI Logo" 
+                    alt="USP-ALIMNI Logo" 
                     fill
                     className="object-contain"
                   />
