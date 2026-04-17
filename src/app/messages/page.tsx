@@ -75,7 +75,7 @@ export default function Messages() {
           unreadCount: unreadForThisContact
         };
       })
-      .sort((a, b) => (b.lastTime || "").localeCompare(a.lastTime || ""));
+      .sort((a: any, b: any) => (b.lastTime || "").localeCompare(a.lastTime || ""));
     
     setContacts(mappedContacts);
   };
@@ -91,7 +91,7 @@ export default function Messages() {
     if (selectedContact && user) {
       dataService.markAsRead(user.email, selectedContact.id);
       const chat = dataService.getConversation(user.email, selectedContact.id);
-      setMessages(chat.map(m => ({
+      setMessages(chat.map((m: any) => ({
         ...m,
         isMine: m.senderId === user.email
       })));
