@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { User, Mail, GraduationCap, BookOpen, Save, LogOut, CheckCircle, MapPin, Briefcase, AlignLeft, Camera, Phone } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { dataService } from "@/lib/dataService";
 
 export default function Profile() {
   const router = useRouter();
@@ -23,14 +24,14 @@ export default function Profile() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const currentUser = JSON.parse(localStorage.getItem("usp_current_user") || "null");
+    const currentUser = dataService.getCurrentUser();
     if (!currentUser) {
       router.push("/login");
     } else {
       setUser(currentUser);
       setFormData({
-        firstName: currentUser.firstName || "",
-        lastName: currentUser.lastName || "",
+        firstName: currentUser.firstName || currentUser.first_name || "",
+        lastName: currentUser.lastName || currentUser.last_name || "",
         phone: currentUser.phone || "",
         promo: currentUser.promo || "",
         job: currentUser.job || "",
@@ -47,54 +48,35 @@ export default function Profile() {
     setIsSaving(true);
     setMessage("");
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    const storedMembers = JSON.parse(localStorage.getItem("usp_members") || "[]");
-    const updatedMembers = storedMembers.map((m: any) => {
-      if (m.email === user.email) {
-        return { ...m, ...formData };
-      }
-      return m;
-    });
-    localStorage.setItem("usp_members", JSON.stringify(updatedMembers));
-
     const updatedUser = { ...user, ...formData };
-    localStorage.setItem("usp_current_user", JSON.stringify(updatedUser));
+    await dataService.saveMember(updatedUser);
+    dataService.setCurrentUser(updatedUser);
     setUser(updatedUser);
 
     setIsSaving(false);
     setMessage("Profil mis à jour !");
-    
-    window.dispatchEvent(new Event("storage"));
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("usp_current_user");
-    window.dispatchEvent(new Event("storage"));
+    dataService.logout();
     router.push("/");
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setIsSaving(true);
       const reader = new FileReader();
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         const base64String = reader.result as string;
         const updatedUser = { ...user, avatar: base64String };
-        setUser(updatedUser);
-        localStorage.setItem("usp_current_user", JSON.stringify(updatedUser));
         
-        // Update in members list
-        const storedMembers = JSON.parse(localStorage.getItem("usp_members") || "[]");
-        const updatedMembers = storedMembers.map((m: any) => 
-          m.email === user.email ? { ...m, avatar: base64String } : m
-        );
-        localStorage.setItem("usp_members", JSON.stringify(updatedMembers));
+        await dataService.saveMember(updatedUser);
+        dataService.setCurrentUser(updatedUser);
+        setUser(updatedUser);
         
         setIsSaving(false);
         setMessage("Photo mise à jour !");
-        window.dispatchEvent(new Event("storage"));
       };
       reader.readAsDataURL(file);
     }

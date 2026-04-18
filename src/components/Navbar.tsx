@@ -19,12 +19,13 @@ const Navbar = () => {
     { id: 3, title: "Nouveau message", desc: "Vous avez reçu un message de l'admin.", time: "Il y a 2h", icon: <MessageSquare size={16} />, color: "bg-amber-50 text-amber-500" },
   ];
 
-  const checkUser = () => {
+  const checkUser = async () => {
     const currentUser = dataService.getCurrentUser();
     setUser(currentUser);
     
     if (currentUser) {
-      setUnreadCount(dataService.getUnreadCount(currentUser.email));
+      const count = await dataService.getUnreadCount(currentUser.email);
+      setUnreadCount(count);
     } else {
       setUnreadCount(0);
     }
@@ -70,39 +71,33 @@ const Navbar = () => {
               </Link>
             </div>
             
-            <div className="flex items-center space-x-2 lg:space-x-4">
+            <div className="flex items-center space-x-1 sm:space-x-2 lg:space-x-4">
               {user && (
-                <>
-                  <Link href="/" className="text-white hover:bg-white/10 px-4 py-3 rounded-2xl flex items-center gap-2 transition-all group/link" title="Accueil">
-                    <Home size={20} />
-                    <span className="hidden xl:inline text-xs font-black">Accueil</span>
+                <div className="flex items-center gap-0.5 sm:gap-1 overflow-x-auto no-scrollbar max-w-[50vw] sm:max-w-none px-1">
+                  <Link href="/" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Accueil">
+                    <Home size={18} className="sm:w-5 sm:h-5" />
                   </Link>
-                  <Link href="/news" className="text-white hover:bg-white/10 px-4 py-3 rounded-2xl flex items-center gap-2 transition-all group/link" title="Actualités">
-                    <Newspaper size={20} />
-                    <span className="hidden xl:inline text-xs font-black">Actualités</span>
+                  <Link href="/news" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Actualités">
+                    <Newspaper size={18} className="sm:w-5 sm:h-5" />
                   </Link>
-                  <Link href="/messages" className="text-white hover:bg-white/10 px-4 py-3 rounded-2xl flex items-center gap-2 transition-all group/link relative" title="Messages">
-                    <MessageSquare size={20} />
-                    <span className="hidden xl:inline text-xs font-black">Messages</span>
+                  <Link href="/messages" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link relative" title="Messages">
+                    <MessageSquare size={18} className="sm:w-5 sm:h-5" />
                     {unreadCount > 0 && (
-                      <span className="absolute top-2 right-2 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-black flex items-center justify-center rounded-full border-2 border-sky-400 px-1">
+                      <span className="absolute top-1 right-1 min-w-[14px] h-[14px] sm:min-w-[18px] sm:h-[18px] bg-red-500 text-white text-[8px] sm:text-[10px] font-black flex items-center justify-center rounded-full border-2 border-sky-400 px-0.5">
                         {unreadCount}
                       </span>
                     )}
                   </Link>
-                  <Link href="/members" className="text-white hover:bg-white/10 px-4 py-3 rounded-2xl flex items-center gap-2 transition-all group/link" title="Membres">
-                    <Users size={20} />
-                    <span className="hidden xl:inline text-xs font-black">Membres</span>
+                  <Link href="/members" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Membres">
+                    <Users size={18} className="sm:w-5 sm:h-5" />
                   </Link>
-                  <Link href="/treasury" className="text-white hover:bg-white/10 px-4 py-3 rounded-2xl flex items-center gap-2 transition-all group/link" title="Trésorerie">
-                    <Wallet size={20} />
-                    <span className="hidden xl:inline text-xs font-black">Trésorerie</span>
+                  <Link href="/treasury" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Trésorerie">
+                    <Wallet size={18} className="sm:w-5 sm:h-5" />
                   </Link>
-                  <Link href="/responsable" className="text-white hover:bg-white/10 px-4 py-3 rounded-2xl flex items-center gap-2 transition-all group/link" title="Admin">
-                    <ShieldCheck size={20} />
-                    <span className="hidden xl:inline text-xs font-black">Admin</span>
+                  <Link href="/responsable" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Admin">
+                    <ShieldCheck size={18} className="sm:w-5 sm:h-5" />
                   </Link>
-                </>
+                </div>
               )}
 
               <div className="flex items-center gap-3 ml-4 pl-4 border-l border-white/20">
@@ -154,7 +149,6 @@ const Navbar = () => {
                 {user ? (
                   <Link href="/profile" className="bg-white text-sky-600 hover:shadow-xl px-4 py-3 rounded-2xl transition-all transform active:scale-95 shadow-lg shadow-sky-900/10 flex items-center gap-2" title="Mon Profil">
                     <UserIcon size={20} />
-                    <span className="hidden sm:inline text-xs font-black">Profil</span>
                   </Link>
                 ) : (
                   <>

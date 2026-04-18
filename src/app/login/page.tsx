@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Lock, Mail, Eye, EyeOff, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { dataService } from "@/lib/dataService";
 
 export default function Login() {
   const router = useRouter();
@@ -20,12 +21,11 @@ export default function Login() {
     // Simulation d'une requête API
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    // Vérification dans le localStorage (Simulation de base de données)
-    const storedMembers = JSON.parse(localStorage.getItem("usp_members") || "[]");
-    const user = storedMembers.find((m: any) => m.email === formData.email);
+    // Vérification dans la base de données
+    const storedMembers = await dataService.getMembers();
+    const user = storedMembers.find((m: any) => m.email === formData.email && m.password === formData.password);
 
-    // Note: Dans une vraie app, on vérifierait aussi le mot de passe haché
-    if (user || formData.email === "admin@usp.com") {
+    if (user || (formData.email === "admin@usp.com" && formData.password === "admin")) {
       const userData = user || { 
         id: 0, 
         firstName: "Admin", 
@@ -34,14 +34,10 @@ export default function Login() {
         isAdmin: true 
       };
       
-      localStorage.setItem("usp_current_user", JSON.stringify(userData));
-      
-      // Déclencher un événement pour mettre à jour la Navbar
-      window.dispatchEvent(new Event("storage"));
-      
+      dataService.setCurrentUser(userData);
       router.push("/profile");
     } else {
-      setError("Email non trouvé. Veuillez vous inscrire d'abord.");
+      setError("Email ou mot de passe incorrect.");
     }
     
     setIsSubmitting(false);

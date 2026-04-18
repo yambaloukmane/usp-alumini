@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Trash2, FileDown, ShieldCheck, AlertCircle, Newspaper, Briefcase, Plus, X, Image as ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { dataService } from "@/lib/dataService";
 
 interface Member {
   id: number;
@@ -43,13 +44,6 @@ export default function Responsable() {
   const [newArticle, setNewArticle] = useState({ title: "", desc: "", img: "" });
   const [newJob, setNewJob] = useState({ title: "", company: "", location: "", salary: "", type: "CDI" });
 
-  const defaultMembers: Member[] = [
-    { id: 1, firstName: "Jean", lastName: "DUPONT", promo: "2020", job: "Développeur Web" },
-    { id: 2, firstName: "Marie", lastName: "CURIE", promo: "2018", job: "Data Scientist" },
-    { id: 3, firstName: "Thomas", lastName: "SANKARA", promo: "2015", job: "Chef de Projet" },
-    { id: 4, firstName: "Alice", lastName: "WONDER", promo: "2022", job: "Designer UX" },
-  ];
-
   useEffect(() => {
     // Check if user is logged in at all
     const currentUser = localStorage.getItem("usp_current_user");
@@ -66,12 +60,12 @@ export default function Responsable() {
     }
   }, [router]);
 
-  const loadData = () => {
-    const storedMembers = JSON.parse(localStorage.getItem("usp_members") || "[]");
-    const storedNews = JSON.parse(localStorage.getItem("usp_news") || "[]");
-    const storedJobs = JSON.parse(localStorage.getItem("usp_jobs") || "[]");
+  const loadData = async () => {
+    const storedMembers = await dataService.getMembers();
+    const storedNews = await dataService.getNews();
+    const storedJobs = await dataService.getJobs();
     
-    setMembers([...storedMembers, ...defaultMembers]);
+    setMembers(storedMembers);
     setNews(storedNews);
     setJobs(storedJobs);
   };

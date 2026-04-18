@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Search, User as UserIcon, Sparkles, MapPin, Briefcase, Filter, X, ChevronDown } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { dataService } from "@/lib/dataService";
 
 interface Member {
   id: number;
@@ -29,22 +30,21 @@ export default function Members() {
   const [filterSector, setFilterSector] = useState("");
   const [filterCountry, setFilterCountry] = useState("");
 
-  const defaultMembers: Member[] = [
-    { id: 1, firstName: "Jean", lastName: "DUPONT", promo: "2020", job: "Développeur Web", sector: "Informatique", city: "Paris", country: "France", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jean" },
-    { id: 2, firstName: "Marie", lastName: "CURIE", promo: "2018", job: "Data Scientist", sector: "Sciences", city: "Lyon", country: "France", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Marie" },
-    { id: 3, firstName: "Thomas", lastName: "SANKARA", promo: "2015", job: "Chef de Projet", sector: "Management", city: "Ouagadougou", country: "Burkina Faso", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Thomas" },
-    { id: 4, firstName: "Alice", lastName: "WONDER", promo: "2022", job: "Designer UX", sector: "Design", city: "Londres", country: "Royaume-Uni", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alice" },
-  ];
+  const defaultMembers: Member[] = [];
 
   useEffect(() => {
-    const currentUser = localStorage.getItem("usp_current_user");
-    if (!currentUser) {
-      router.push("/login");
-      return;
-    }
+    const fetchMembers = async () => {
+      const currentUser = localStorage.getItem("usp_current_user");
+      if (!currentUser) {
+        router.push("/login");
+        return;
+      }
 
-    const storedMembers = JSON.parse(localStorage.getItem("usp_members") || "[]");
-    setMembers([...storedMembers, ...defaultMembers]);
+      const storedMembers = await dataService.getMembers();
+      setMembers([...storedMembers]);
+    };
+
+    fetchMembers();
   }, [router]);
 
   const filteredMembers = members.filter(m => {
@@ -158,14 +158,8 @@ export default function Members() {
             
             {/* Contenu Card */}
             <div className="px-6 pb-8 -mt-12 flex-grow">
-              <div className="w-24 h-24 bg-white rounded-3xl p-1 shadow-lg mb-4 ring-4 ring-white relative overflow-hidden">
-                {member.avatar ? (
-                  <img src={member.avatar} alt="Avatar" className="w-full h-full object-cover rounded-2xl" />
-                ) : (
-                  <div className="w-full h-full bg-sky-50 flex items-center justify-center text-sky-500 rounded-2xl">
-                    <UserIcon size={40} />
-                  </div>
-                )}
+              <div className="w-24 h-24 bg-sky-50 rounded-3xl p-1 shadow-lg mb-4 ring-4 ring-white relative overflow-hidden flex items-center justify-center text-sky-500">
+                <UserIcon size={40} />
               </div>
               
               <h3 className="text-xl font-black text-gray-900 group-hover:text-sky-600 transition-colors leading-tight">

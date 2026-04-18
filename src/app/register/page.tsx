@@ -4,6 +4,7 @@ import { useState } from "react";
 import { User, Mail, Lock, Calendar, GraduationCap, BookOpen, MapPin, Briefcase, AlignLeft, CheckCircle, ShieldCheck, Phone } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { dataService } from "@/lib/dataService";
 
 export default function Register() {
   const router = useRouter();
@@ -24,6 +25,7 @@ export default function Register() {
     bio: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState("");
 
   const validateEmail = (email: string) => {
@@ -68,14 +70,13 @@ export default function Register() {
 
   const completeRegistration = async () => {
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const newMember = {
-      id: Date.now(),
       firstName: formData.prenom,
       lastName: formData.nom,
       email: formData.email,
       phone: formData.phone,
+      password: formData.password,
       promo: formData.promoYear || new Date().getFullYear().toString(),
       job: formData.formationStatus || "Nouveau Membre",
       sector: formData.sector,
@@ -83,19 +84,21 @@ export default function Register() {
       country: formData.country,
       bio: formData.bio,
       isNew: true,
-      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.email}`
+      avatar: ""
     };
 
-    const existingMembers = JSON.parse(localStorage.getItem("usp_members") || "[]");
-    localStorage.setItem("usp_members", JSON.stringify([newMember, ...existingMembers]));
+    await dataService.saveMember(newMember);
 
     // Connexion automatique de l'utilisateur
-    localStorage.setItem("usp_current_user", JSON.stringify(newMember));
-    // Déclencher la mise à jour de la Navbar
-    window.dispatchEvent(new Event("storage"));
+    dataService.setCurrentUser(newMember);
 
     setIsSubmitting(false);
-    router.push("/");
+    setShowSuccess(true);
+    
+    // Attendre 3 secondes avant la redirection pour laisser l'utilisateur voir le message
+    setTimeout(() => {
+      router.push("/");
+    }, 3000);
   };
 
   return (
