@@ -105,7 +105,22 @@ export default function Register() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-20">
       <div className="max-w-2xl w-full space-y-8 bg-white p-10 rounded-[2.5rem] shadow-2xl border border-gray-100">
         
-        {step === 'form' ? (
+        {showSuccess ? (
+          <div className="py-12 text-center animate-in fade-in zoom-in duration-500">
+            <div className="w-24 h-24 bg-emerald-500 text-white rounded-[2.5rem] flex items-center justify-center mx-auto shadow-2xl shadow-emerald-200 mb-8 animate-bounce">
+              <CheckCircle size={48} />
+            </div>
+            <h2 className="text-3xl font-black text-black mb-4 tracking-tight">Félicitations !</h2>
+            <p className="text-gray-500 font-bold mb-8 leading-relaxed">
+              Votre compte <span className="text-sky-500">USP-ALIMNI</span> a été créé avec succès.<br/>
+              Bienvenue dans le réseau des anciens élèves !
+            </p>
+            <div className="flex items-center justify-center gap-3 text-emerald-600 font-black text-sm uppercase tracking-widest bg-emerald-50 py-3 rounded-2xl">
+              <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+              Redirection automatique...
+            </div>
+          </div>
+        ) : step === 'form' ? (
           <>
             <div className="text-center">
               <h2 className="text-4xl font-black text-black tracking-tight">
