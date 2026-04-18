@@ -48,6 +48,42 @@ export default function Messages() {
   const [showCallUI, setShowCallUI] = useState<any>(null); // { type: 'audio' | 'video', status: 'calling' | 'active', roomName: string }
   const [isJitsiLoaded, setIsJitsiLoaded] = useState(false);
   
+  const [isPlayingAudio, setIsPlayingAudio] = useState<string | null>(null);
+  const audioPlayer = useRef<HTMLAudioElement | null>(null);
+
+  const toggleAudio = (audioData: string, msgId: string) => {
+    if (isPlayingAudio === msgId) {
+      if (audioPlayer.current) {
+        audioPlayer.current.pause();
+        setIsPlayingAudio(null);
+      }
+    } else {
+      if (audioPlayer.current) {
+        audioPlayer.current.pause();
+      }
+      const base64 = audioData.replace('[AUDIO]', '');
+      audioPlayer.current = new Audio(base64);
+      audioPlayer.current.play();
+      setIsPlayingAudio(msgId);
+      audioPlayer.current.onended = () => setIsPlayingAudio(null);
+    }
+  };
+
+  // Poll for new messages every 3 seconds
+  useEffect(() => {
+    if (!user || !selectedContact) return;
+
+    const interval = setInterval(async () => {
+      const conv = await dataService.getConversation(user.email, selectedContact.id);
+      setMessages(conv.map(m => ({
+        ...m,
+        isMine: m.senderId === user.email
+      })));
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [user, selectedContact]);
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
@@ -470,16 +506,19 @@ export default function Messages() {
                     <div className={`max-w-[80%] md:max-w-[60%] p-5 rounded-[2rem] shadow-sm relative ${msg.isMine ? 'bg-sky-500 text-white rounded-br-none' : 'bg-white border border-gray-100 text-gray-900 rounded-bl-none'}`}>
                       {msg.text.startsWith('[AUDIO]') ? (
                         <div className="flex items-center gap-4 py-1 min-w-[200px]">
-                          <button className={`w-10 h-10 rounded-full flex items-center justify-center shadow-md ${msg.isMine ? 'bg-white text-sky-500' : 'bg-sky-500 text-white'}`}>
-                            <Play size={18} fill="currentColor" />
+                          <button 
+                            onClick={() => toggleAudio(msg.text, msg.id.toString())}
+                            className={`w-10 h-10 rounded-full flex items-center justify-center shadow-md ${msg.isMine ? 'bg-white text-sky-500' : 'bg-sky-500 text-white'}`}
+                          >
+                            {isPlayingAudio === msg.id.toString() ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" />}
                           </button>
                           <div className="flex-grow space-y-2">
                             <div className={`h-1.5 rounded-full relative overflow-hidden ${msg.isMine ? 'bg-sky-400' : 'bg-gray-100'}`}>
-                              <div className={`absolute left-0 top-0 bottom-0 w-1/3 ${msg.isMine ? 'bg-white' : 'bg-sky-500'}`}></div>
+                              <div className={`absolute left-0 top-0 bottom-0 ${isPlayingAudio === msg.id.toString() ? 'w-full transition-all duration-[10s]' : 'w-0'} ${msg.isMine ? 'bg-white' : 'bg-sky-500'}`}></div>
                             </div>
                             <div className="flex justify-between text-[10px] font-black opacity-60">
                               <span>🎤 Message vocal</span>
-                              <span>0:15</span>
+                              <span>{isPlayingAudio === msg.id.toString() ? "Lecture..." : "Prêt"}</span>
                             </div>
                           </div>
                         </div>
