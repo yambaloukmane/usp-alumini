@@ -12,14 +12,15 @@ export const dataService = {
     try {
       const { error } = await supabase.from('members').select('count', { count: 'exact', head: true });
       if (error) {
+        console.error("Full Supabase Error:", error);
         if (error.message.includes('fetch')) {
-          return "Erreur de connexion : Vérifiez votre URL Supabase dans Vercel.";
+          return "Erreur de connexion : L'URL Supabase est injoignable.";
         }
-        return "Erreur API : " + error.message;
+        return "Erreur API : " + (error.message || error.details || "Clé incorrecte ou accès refusé");
       }
       return "OK";
     } catch (e: any) {
-      return "Erreur réseau : " + (e.message || "Impossible de joindre Supabase");
+      return "Erreur fatale : " + (e.message || "Problème réseau inconnu");
     }
   },
 
