@@ -68,23 +68,70 @@ export default function Profile() {
     router.push("/");
   };
 
+  const compressImage = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new window.Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_SIZE = 400;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_SIZE) {
+              height *= MAX_SIZE / width;
+              width = MAX_SIZE;
+            }
+          } else {
+            if (height > MAX_SIZE) {
+              width *= MAX_SIZE / height;
+              height = MAX_SIZE;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) {
+            reject("Canvas context not available");
+            return;
+          }
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', 0.7));
+        };
+        img.onerror = () => reject("Erreur lors du chargement de l'image");
+      };
+      reader.onerror = () => reject("Erreur lors de la lecture du fichier");
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setIsSaving(true);
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64String = reader.result as string;
-        const updatedUser = { ...user, avatar: base64String };
+      setMessage("Compression de l'image...");
+      try {
+        const compressedBase64 = await compressImage(file);
+        const updatedUser = { ...user, avatar: compressedBase64 };
         
-        await dataService.saveMember(updatedUser);
-        dataService.setCurrentUser(updatedUser);
-        setUser(updatedUser);
-        
+        const saved = await dataService.saveMember(updatedUser);
+        if (saved) {
+          dataService.setCurrentUser(saved);
+          setUser(saved);
+          setMessage("Photo mise à jour !");
+        } else {
+          setMessage("Erreur lors de la mise à jour.");
+        }
+      } catch (e) {
+        console.error("Upload error", e);
+        setMessage("Erreur lors du traitement de l'image.");
+      } finally {
         setIsSaving(false);
-        setMessage("Photo mise à jour !");
-      };
-      reader.readAsDataURL(file);
+      }
     }
   };
 

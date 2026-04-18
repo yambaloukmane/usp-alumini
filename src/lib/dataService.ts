@@ -57,9 +57,8 @@ export const dataService = {
   
   saveMember: async (member: any) => {
     try {
-      const payload = {
+      const payload: any = {
         email: member.email,
-        password: member.password,
         first_name: member.first_name,
         last_name: member.last_name,
         phone: member.phone,
@@ -72,16 +71,38 @@ export const dataService = {
         avatar: member.avatar
       };
 
-      const { data, error } = await supabase
-        .from('members')
-        .upsert(payload, { onConflict: 'email' })
-        .select();
+      if (member.password) {
+        payload.password = member.password;
+      }
+
+      // Supprimer les clés dont la valeur est undefined
+      Object.keys(payload).forEach(key => {
+        if (payload[key] === undefined) {
+          delete payload[key];
+        }
+      });
+
+      let query;
+      if (member.id) {
+        // Pour une mise à jour, on utilise update sur l'ID
+        query = supabase.from('members').update(payload).eq('id', member.id);
+      } else if (member.email && !member.password) {
+        // Si on a l'email mais pas de mot de passe, c'est forcément une mise à jour de profil existant
+        query = supabase.from('members').update(payload).eq('email', member.email);
+      } else {
+        // Pour une création ou si on a tout, on utilise upsert sur l'email
+        query = supabase.from('members').upsert(payload, { onConflict: 'email' });
+      }
+
+      const { data, error } = await query.select();
       
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase Save Error:", error);
+        throw error;
+      }
       
       const saved = data ? data[0] : null;
       if (saved) {
-        // Retourner l'objet avec les noms de colonnes DB
         return {
           id: saved.id,
           email: saved.email,
