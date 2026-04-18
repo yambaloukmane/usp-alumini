@@ -83,29 +83,28 @@ export default function Register() {
       city: formData.city || "Non définie",
       country: formData.country || "Non défini",
       bio: formData.bio || "Bonjour ! Je viens de rejoindre le réseau USP.",
-      isNew: true,
       avatar: ""
     };
 
-    const savedUser = await dataService.saveMember(newMember);
+    try {
+      const savedUser = await dataService.saveMember(newMember);
 
-    // Connexion automatique de l'utilisateur avec les données réelles de la DB (incluant l'ID UUID)
-    if (savedUser) {
-      dataService.setCurrentUser({
-        ...newMember,
-        id: savedUser.id
-      });
-    } else {
-      dataService.setCurrentUser(newMember);
+      if (savedUser) {
+        dataService.setCurrentUser(savedUser);
+        setIsSubmitting(false);
+        setShowSuccess(true);
+        
+        setTimeout(() => {
+          router.push("/");
+        }, 3000);
+      } else {
+        setError("Erreur lors de la sauvegarde du profil.");
+        setIsSubmitting(false);
+      }
+    } catch (e: any) {
+      setError(e.message || "Erreur lors de l'inscription.");
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
-    setShowSuccess(true);
-    
-    // Attendre 3 secondes avant la redirection pour laisser l'utilisateur voir le message
-    setTimeout(() => {
-      router.push("/");
-    }, 3000);
   };
 
   return (

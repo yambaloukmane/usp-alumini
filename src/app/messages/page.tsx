@@ -23,8 +23,8 @@ interface Message {
 
 interface Contact {
   id: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   promo: string;
   job: string;
   avatar?: string;
@@ -88,21 +88,21 @@ export default function Messages() {
       .map((m: any) => {
         const conversation = allMsgs.filter((msg: any) => 
           msg && (
-            (msg.senderId === currentUser.email || msg.sender_id === currentUser.email) && 
-            (msg.receiverId === m.email || msg.receiver_id === m.email) ||
-            (msg.senderId === m.email || msg.sender_id === m.email) && 
-            (msg.receiverId === currentUser.email || msg.receiver_id === currentUser.email)
+            (msg.sender_id === currentUser.email) && 
+            (msg.receiver_id === m.email) ||
+            (msg.sender_id === m.email) && 
+            (msg.receiver_id === currentUser.email)
           )
         );
         const lastMsg = conversation.length > 0 ? conversation[conversation.length - 1] : null;
         const unreadForThisContact = conversation.filter((msg: any) => 
-          (msg.receiverId === currentUser.email || msg.receiver_id === currentUser.email) && !msg.isRead && !msg.is_read
+          (msg.receiver_id === currentUser.email) && !msg.is_read
         ).length;
         
         return {
           id: m.email,
-          firstName: m.firstName || m.first_name || "Inconnu",
-          lastName: m.lastName || m.last_name || "",
+          first_name: m.first_name || "Inconnu",
+          last_name: m.last_name || "",
           promo: m.promo || "N/A",
           job: m.job || "Membre",
           avatar: m.avatar || "",
@@ -253,7 +253,7 @@ export default function Messages() {
           TILE_VIEW_MAX_COLUMNS: 2,
         },
         userInfo: {
-          displayName: `${user.firstName} ${user.lastName}`,
+          displayName: `${user.first_name} ${user.last_name}`,
           email: user.email
         }
       };
@@ -274,7 +274,7 @@ export default function Messages() {
   }, [showCallUI?.status, isJitsiLoaded, user]);
 
   const filteredContacts = contacts.filter(c => 
-    `${c.firstName} ${c.lastName}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    `${c.first_name} ${c.last_name}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
     c.promo.includes(searchQuery)
   );
 
@@ -339,7 +339,7 @@ export default function Messages() {
                 <div className="flex-grow text-left overflow-hidden">
                   <div className="flex justify-between items-center mb-1">
                     <h4 className={`font-black truncate text-sm ${selectedContact?.id === contact.id ? 'text-white' : 'text-gray-900'}`}>
-                      {contact.firstName} {contact.lastName}
+                      {contact.first_name} {contact.last_name}
                     </h4>
                     <span className={`text-[10px] font-bold whitespace-nowrap ${selectedContact?.id === contact.id ? 'text-sky-100' : 'text-gray-400'}`}>
                       {contact.lastTime}
@@ -387,7 +387,7 @@ export default function Messages() {
                     <User size={24} />
                   </div>
                   <div>
-                    <h3 className="font-black text-gray-900">{selectedContact.firstName} {selectedContact.lastName}</h3>
+                    <h3 className="font-black text-gray-900">{selectedContact.first_name} {selectedContact.last_name}</h3>
                     <div className="flex items-center gap-2">
                       <span className={`w-2 h-2 rounded-full ${selectedContact.isOnline ? 'bg-emerald-500 animate-pulse' : 'bg-gray-300'}`}></span>
                       <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
@@ -439,7 +439,7 @@ export default function Messages() {
                         <User size={64} className="text-white" />
                         <div className="absolute -inset-4 border-2 border-white/30 rounded-[3.5rem] animate-ping opacity-20"></div>
                       </div>
-                      <h2 className="text-3xl font-black mb-2">{selectedContact.firstName} {selectedContact.lastName}</h2>
+                      <h2 className="text-3xl font-black mb-2">{selectedContact.first_name} {selectedContact.last_name}</h2>
                       <p className="font-bold text-sky-100 mb-12 uppercase tracking-[0.2em] text-sm">
                         Appel en cours...
                       </p>

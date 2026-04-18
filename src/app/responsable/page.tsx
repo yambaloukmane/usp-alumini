@@ -7,8 +7,8 @@ import { dataService } from "@/lib/dataService";
 
 interface Member {
   id: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   promo: string;
   job: string;
   isNew?: boolean;
@@ -68,8 +68,8 @@ export default function Responsable() {
     // Adapter les données Supabase aux interfaces si nécessaire
     setMembers(storedMembers.map((m: any) => ({
       id: m.id,
-      firstName: m.first_name,
-      lastName: m.last_name,
+      first_name: m.first_name,
+      last_name: m.last_name,
       promo: m.promo,
       job: m.job
     })));
@@ -237,7 +237,7 @@ export default function Responsable() {
                 {members.map((member) => (
                   <tr key={member.id} className="hover:bg-gray-50/50 transition-colors print:hover:bg-transparent">
                     <td className="px-8 py-5 whitespace-nowrap">
-                      <div className="font-black text-gray-900">{member.lastName} {member.firstName}</div>
+                      <div className="font-black text-gray-900">{member.last_name} {member.first_name}</div>
                     </td>
                     <td className="px-8 py-5 whitespace-nowrap">
                       <span className="px-3 py-1 bg-sky-50 text-sky-600 rounded-full text-[10px] font-black uppercase tracking-widest">Promo {member.promo}</span>

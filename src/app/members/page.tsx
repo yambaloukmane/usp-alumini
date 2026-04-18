@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import { dataService } from "@/lib/dataService";
 
 interface Member {
-  id: number;
-  firstName: string;
-  lastName: string;
+  id: string;
+  first_name: string;
+  last_name: string;
   promo: string;
   job: string;
   sector?: string;
@@ -30,29 +30,11 @@ export default function Members() {
   const [filterSector, setFilterSector] = useState("");
   const [filterCountry, setFilterCountry] = useState("");
 
-  const defaultMembers: Member[] = [];
-
   useEffect(() => {
     const fetchMembers = async () => {
       try {
         const storedMembers = await dataService.getMembers();
-        console.log("Membres récupérés:", storedMembers);
-        
-        const mappedMembers = storedMembers.map((m: any) => ({
-          id: m.id,
-          firstName: m.first_name || m.firstName,
-          lastName: m.last_name || m.lastName,
-          promo: m.promo,
-          job: m.job,
-          sector: m.sector,
-          city: m.city,
-          country: m.country,
-          bio: m.bio,
-          avatar: m.avatar,
-          isNew: m.isNew
-        }));
-
-        setMembers(mappedMembers);
+        setMembers(storedMembers);
       } catch (error) {
         console.error("Erreur lors de la récupération des membres:", error);
       }
@@ -62,7 +44,7 @@ export default function Members() {
   }, [router]);
 
   const filteredMembers = members.filter(m => {
-    const matchesSearch = `${m.firstName} ${m.lastName} ${m.job} ${m.sector || ""} ${m.city || ""} ${m.country || ""}`.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = `${m.first_name} ${m.last_name} ${m.job} ${m.sector || ""} ${m.city || ""} ${m.country || ""}`.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesPromo = filterPromo === "" || m.promo === filterPromo;
     const matchesSector = filterSector === "" || (m.sector && m.sector.toLowerCase().includes(filterSector.toLowerCase()));
     const matchesCountry = filterCountry === "" || (m.country && m.country.toLowerCase().includes(filterCountry.toLowerCase()));
@@ -174,14 +156,14 @@ export default function Members() {
             <div className="px-6 pb-8 -mt-12 flex-grow">
               <div className="w-24 h-24 bg-sky-50 rounded-3xl p-1 shadow-lg mb-4 ring-4 ring-white relative overflow-hidden flex items-center justify-center text-sky-500">
                 {member.avatar ? (
-                  <img src={member.avatar} alt={member.firstName} className="w-full h-full object-cover" />
+                  <img src={member.avatar} alt={member.first_name} className="w-full h-full object-cover" />
                 ) : (
                   <UserIcon size={40} />
                 )}
               </div>
               
               <h3 className="text-xl font-black text-gray-900 group-hover:text-sky-600 transition-colors leading-tight">
-                {member.firstName} {member.lastName}
+                {member.first_name} {member.last_name}
               </h3>
               <p className="text-sky-600 font-black text-sm mb-4">
                 Promotion {member.promo}

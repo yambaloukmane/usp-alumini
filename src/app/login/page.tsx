@@ -18,29 +18,32 @@ export default function Login() {
     setIsSubmitting(true);
     setError("");
 
-    // Simulation d'une requête API
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const user = await dataService.login(formData.email, formData.password);
 
-    // Vérification dans la base de données
-    const storedMembers = await dataService.getMembers();
-    const user = storedMembers.find((m: any) => m.email === formData.email && m.password === formData.password);
-
-    if (user || (formData.email === "admin@usp.com" && formData.password === "admin")) {
-      const userData = user || { 
-        id: 0, 
-        firstName: "Admin", 
-        lastName: "User", 
-        email: "admin@usp.com",
-        isAdmin: true 
-      };
-      
-      dataService.setCurrentUser(userData);
-      router.push("/profile");
-    } else {
-      setError("Email ou mot de passe incorrect.");
+      if (user) {
+        router.push("/profile");
+      } else {
+        // Fallback for admin test account if not in DB
+        if (formData.email === "admin@usp.com" && formData.password === "admin") {
+          const adminUser = { 
+            id: "admin-001", 
+            first_name: "Admin", 
+            last_name: "User", 
+            email: "admin@usp.com",
+            isAdmin: true 
+          };
+          dataService.setCurrentUser(adminUser);
+          router.push("/profile");
+        } else {
+          setError("Email ou mot de passe incorrect.");
+        }
+      }
+    } catch (e) {
+      setError("Une erreur est survenue lors de la connexion.");
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    setIsSubmitting(false);
   };
 
   return (

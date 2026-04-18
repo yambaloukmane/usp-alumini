@@ -10,8 +10,8 @@ export default function Profile() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     phone: "",
     promo: "",
     job: "",
@@ -30,8 +30,8 @@ export default function Profile() {
     } else {
       setUser(currentUser);
       setFormData({
-        firstName: currentUser.firstName || currentUser.first_name || "",
-        lastName: currentUser.lastName || currentUser.last_name || "",
+        first_name: currentUser.first_name || "",
+        last_name: currentUser.last_name || "",
         phone: currentUser.phone || "",
         promo: currentUser.promo || "",
         job: currentUser.job || "",
@@ -48,13 +48,19 @@ export default function Profile() {
     setIsSaving(true);
     setMessage("");
 
-    const updatedUser = { ...user, ...formData };
-    await dataService.saveMember(updatedUser);
-    dataService.setCurrentUser(updatedUser);
-    setUser(updatedUser);
-
-    setIsSaving(false);
-    setMessage("Profil mis à jour !");
+    try {
+      const updatedUser = { ...user, ...formData };
+      const saved = await dataService.saveMember(updatedUser);
+      if (saved) {
+        dataService.setCurrentUser(saved);
+        setUser(saved);
+        setMessage("Profil mis à jour !");
+      }
+    } catch (e) {
+      setMessage("Erreur lors de la sauvegarde.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleLogout = () => {
@@ -104,7 +110,7 @@ export default function Profile() {
               </label>
             </div>
             <div className="text-center md:text-left space-y-2">
-              <h1 className="text-4xl font-black tracking-tight">{user.firstName} {user.lastName}</h1>
+              <h1 className="text-4xl font-black tracking-tight">{user.first_name} {user.last_name}</h1>
               <div className="flex flex-wrap justify-center md:justify-start gap-3">
                 <span className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-sm font-bold border border-white/20">
                   Promo {user.promo}
@@ -148,8 +154,8 @@ export default function Profile() {
                     <input
                       type="text"
                       className="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 outline-none transition-all font-bold text-black"
-                      value={formData.firstName}
-                      onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                      value={formData.first_name}
+                      onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
                     />
                   </div>
                 </div>
@@ -162,8 +168,8 @@ export default function Profile() {
                     <input
                       type="text"
                       className="w-full pl-11 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 outline-none transition-all font-bold text-black"
-                      value={formData.lastName}
-                      onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                      value={formData.last_name}
+                      onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
                     />
                   </div>
                 </div>

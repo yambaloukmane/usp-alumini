@@ -10,9 +10,29 @@ export const dataService = {
   // Members & Auth
   getMembers: async () => {
     try {
-      const { data, error } = await supabase.from('members').select('*');
+      const { data, error } = await supabase
+        .from('members')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
       if (error) throw error;
-      return data || [];
+      
+      return (data || []).map(m => ({
+        id: m.id,
+        email: m.email,
+        password: m.password,
+        first_name: m.first_name,
+        last_name: m.last_name,
+        phone: m.phone,
+        promo: m.promo,
+        job: m.job,
+        sector: m.sector,
+        city: m.city,
+        country: m.country,
+        bio: m.bio,
+        avatar: m.avatar,
+        created_at: m.created_at
+      }));
     } catch (e) {
       console.error("Fetch members failed", e);
       return [];
@@ -21,35 +41,85 @@ export const dataService = {
   
   saveMember: async (member: any) => {
     try {
+      const payload = {
+        email: member.email,
+        password: member.password,
+        first_name: member.first_name,
+        last_name: member.last_name,
+        phone: member.phone,
+        promo: member.promo,
+        job: member.job,
+        sector: member.sector,
+        city: member.city,
+        country: member.country,
+        bio: member.bio,
+        avatar: member.avatar
+      };
+
       const { data, error } = await supabase
         .from('members')
-        .upsert({
-          email: member.email,
-          password: member.password,
-          first_name: member.first_name,
-          last_name: member.last_name,
-          phone: member.phone,
-          promo: member.promo,
-          job: member.job,
-          sector: member.sector,
-          city: member.city,
-          country: member.country,
-          bio: member.bio,
-          avatar: member.avatar
-        }, { onConflict: 'email' })
+        .upsert(payload, { onConflict: 'email' })
         .select();
       
-      if (error) {
-        console.error("Supabase Error details:", error);
-        alert("Erreur de sauvegarde base de données : " + error.message);
-        throw error;
-      }
+      if (error) throw error;
       
-      window.dispatchEvent(new Event("storage"));
-      return data ? data[0] : null;
+      const saved = data ? data[0] : null;
+      if (saved) {
+        // Retourner l'objet avec les noms de colonnes DB
+        return {
+          id: saved.id,
+          email: saved.email,
+          first_name: saved.first_name,
+          last_name: saved.last_name,
+          phone: saved.phone,
+          promo: saved.promo,
+          job: saved.job,
+          sector: saved.sector,
+          city: saved.city,
+          country: saved.country,
+          bio: saved.bio,
+          avatar: saved.avatar
+        };
+      }
+      return null;
     } catch (e: any) {
       console.error("Save member failed", e);
-      alert("Erreur critique : " + (e.message || "Connexion impossible"));
+      throw e;
+    }
+  },
+
+  login: async (email: string, password: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('members')
+        .select('*')
+        .eq('email', email)
+        .eq('password', password)
+        .single();
+      
+      if (error) throw error;
+      
+      if (data) {
+        const user = {
+          id: data.id,
+          email: data.email,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          phone: data.phone,
+          promo: data.promo,
+          job: data.job,
+          sector: data.sector,
+          city: data.city,
+          country: data.country,
+          bio: data.bio,
+          avatar: data.avatar
+        };
+        dataService.setCurrentUser(user);
+        return user;
+      }
+      return null;
+    } catch (e) {
+      console.error("Login failed", e);
       return null;
     }
   },
