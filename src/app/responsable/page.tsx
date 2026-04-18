@@ -176,7 +176,7 @@ export default function Responsable() {
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6 print:hidden">
         <div>
           <h1 className="text-4xl font-black text-gray-900 tracking-tight">Espace Responsable</h1>
-          <p className="text-gray-500 font-medium">Gestion centralisée du réseau USP-ALIMNI.</p>
+          <p className="text-gray-500 font-medium">Gestion centralisée du réseau USP-ALUMNI.</p>
         </div>
         <div className="flex gap-4">
           <button

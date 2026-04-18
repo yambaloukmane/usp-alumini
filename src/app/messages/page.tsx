@@ -224,7 +224,7 @@ export default function Messages() {
     
     // Create a unique room name based on both user emails
     const ids = [user.email, selectedContact.id].sort();
-    const roomName = `USP-ALIMNI-${ids[0]}-${ids[1]}`.replace(/[^a-zA-Z0-9-]/g, '-');
+    const roomName = `USP-ALUMNI-${ids[0]}-${ids[1]}`.replace(/[^a-zA-Z0-9-]/g, '-');
     
     setShowCallUI({ type, status: 'calling', roomName });
 

@@ -112,7 +112,7 @@ export default function Register() {
             </div>
             <h2 className="text-3xl font-black text-black mb-4 tracking-tight">Félicitations !</h2>
             <p className="text-gray-500 font-bold mb-8 leading-relaxed">
-              Votre compte <span className="text-sky-500">USP-ALIMNI</span> a été créé avec succès.<br/>
+              Votre compte <span className="text-sky-500">USP-ALUMNI</span> a été créé avec succès.<br/>
               Bienvenue dans le réseau des anciens élèves !
             </p>
             <div className="flex items-center justify-center gap-3 text-emerald-600 font-black text-sm uppercase tracking-widest bg-emerald-50 py-3 rounded-2xl">
@@ -124,7 +124,7 @@ export default function Register() {
           <>
             <div className="text-center">
               <h2 className="text-4xl font-black text-black tracking-tight">
-                Rejoignez USP-ALIMNI
+                Rejoignez USP-ALUMNI
               </h2>
               <p className="mt-4 text-sm text-gray-600 font-bold">
                 Créez votre compte pour accéder au réseau

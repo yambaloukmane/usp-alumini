@@ -10,12 +10,12 @@ const Footer = () => {
               <div className="relative w-10 h-10 overflow-hidden rounded-md border border-gray-200 bg-white p-0.5">
                 <Image 
                   src="https://sc01.alicdn.com/kf/A10cd1516dd12456686a3ce544d201eccS.jpeg" 
-                  alt="USP-ALIMNI Logo" 
+                  alt="USP-ALUMNI Logo" 
                   fill
                   className="object-contain"
                 />
               </div>
-              <h3 className="text-sm font-bold text-gray-900 tracking-wider uppercase">USP-ALIMNI</h3>
+              <h3 className="text-sm font-bold text-gray-900 tracking-wider uppercase">USP-ALUMNI</h3>
             </div>
             <p className="text-base text-gray-500 text-center md:text-left">
               Le réseau dynamique des anciens élèves de l'USP.
@@ -38,7 +38,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-200 pt-8 text-center">
-          <p className="text-base text-gray-400">&copy; 2026 USP-ALIMNI Inc. Tous droits réservés.</p>
+          <p className="text-base text-gray-400">&copy; 2026 USP-ALUMNI Inc. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

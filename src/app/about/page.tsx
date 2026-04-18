@@ -20,7 +20,7 @@ export default function About() {
             <span className="text-sky-500 text-6xl lg:text-8xl italic">Demain.</span>
           </h1>
           <p className="text-xl text-gray-500 font-bold leading-relaxed max-w-xl">
-            Depuis 2020, USP-ALIMNI s'est imposé comme le réseau d'excellence pour les anciens élèves de l'USP, favorisant la collaboration et l'innovation à l'échelle mondiale.
+            Depuis 2020, USP-ALUMNI s'est imposé comme le réseau d'excellence pour les anciens élèves de l'USP, favorisant la collaboration et l'innovation à l'échelle mondiale.
           </p>
           <div className="flex flex-wrap gap-4">
             <div className="flex items-center gap-2 px-6 py-3 bg-gray-50 rounded-2xl border border-gray-100 font-black text-gray-700">
@@ -65,7 +65,7 @@ export default function About() {
           <div className="flex-grow space-y-8">
             <h2 className="text-4xl lg:text-6xl font-black leading-tight tracking-tighter">Votre parcours <br />ne s'arrête pas au <br /><span className="text-sky-400 italic">Diplôme.</span></h2>
             <p className="text-sky-100/60 text-lg font-medium leading-relaxed max-w-lg">
-              Devenir membre d'USP-ALIMNI, c'est s'assurer un soutien constant et un accès direct aux meilleures opportunités du marché, portées par une communauté qui partage vos valeurs.
+              Devenir membre d'USP-ALUMNI, c'est s'assurer un soutien constant et un accès direct aux meilleures opportunités du marché, portées par une communauté qui partage vos valeurs.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto">

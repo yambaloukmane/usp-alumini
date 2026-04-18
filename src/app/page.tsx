@@ -71,7 +71,7 @@ export default function Home() {
                 <span className="text-sky-500">Mille opportunités.</span>
               </h2>
               <p className="text-gray-500 font-bold text-lg leading-relaxed">
-                USP-ALIMNI n'est pas qu'un annuaire. C'est un accélérateur de réussite pour tous ses membres.
+                USP-ALUMNI n'est pas qu'un annuaire. C'est un accélérateur de réussite pour tous ses membres.
               </p>
             </div>
             <Link href="/about" className="px-8 py-4 bg-sky-50 text-sky-600 rounded-2xl font-black text-sm hover:bg-sky-500 hover:text-white transition-all border border-sky-100 mb-2">

@@ -1,5 +1,5 @@
 /**
- * Data Service for USP-ALIMNI
+ * Data Service for USP-ALUMNI
  * This service abstracts data operations (Mebers, News, Jobs, Messages).
  * Currently uses localStorage but is structured for future API/DB integration.
  */

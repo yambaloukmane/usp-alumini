@@ -31,7 +31,7 @@ export default function News() {
           <div className="pt-10 flex justify-center gap-4">
             <div className="flex items-center gap-2 px-6 py-3 bg-gray-50 rounded-2xl border border-gray-100 font-black text-gray-400 text-sm">
               <Sparkles size={18} className="text-sky-500" />
-              USP-ALIMNI
+              USP-ALUMNI
             </div>
           </div>
         </div>

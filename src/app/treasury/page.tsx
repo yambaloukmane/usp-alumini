@@ -134,7 +134,7 @@ export default function Treasury() {
             <div className="absolute bottom-0 right-0 w-48 h-48 bg-sky-500/20 rounded-full blur-3xl -mr-24 -mb-24"></div>
             <PieChart className="text-sky-400 mb-6" size={32} />
             <h4 className="text-xl font-black mb-4">Transparence Totale</h4>
-            <p className="text-gray-400 text-sm font-medium mb-6">Consultez le rapport financier annuel détaillé du réseau USP-ALIMNI.</p>
+            <p className="text-gray-400 text-sm font-medium mb-6">Consultez le rapport financier annuel détaillé du réseau USP-ALUMNI.</p>
             <button className="w-full py-4 bg-white/10 hover:bg-white/20 border border-white/10 rounded-2xl font-black text-xs uppercase tracking-widest transition-all">
               Consulter le rapport
             </button>
