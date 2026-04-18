@@ -1,9 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Lock, Mail, Eye, EyeOff, AlertCircle } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { dataService } from "@/lib/dataService";
 
 export default function Login() {
