@@ -38,11 +38,18 @@ export const dataService = {
           avatar: member.avatar
         }, { onConflict: 'email' })
         .select();
-      if (error) throw error;
+      
+      if (error) {
+        console.error("Supabase Error details:", error);
+        alert("Erreur de sauvegarde base de données : " + error.message);
+        throw error;
+      }
+      
       window.dispatchEvent(new Event("storage"));
       return data ? data[0] : null;
-    } catch (e) {
+    } catch (e: any) {
       console.error("Save member failed", e);
+      alert("Erreur critique : " + (e.message || "Connexion impossible"));
       return null;
     }
   },
