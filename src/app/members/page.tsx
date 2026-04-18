@@ -34,14 +34,28 @@ export default function Members() {
 
   useEffect(() => {
     const fetchMembers = async () => {
-      const currentUser = localStorage.getItem("usp_current_user");
-      if (!currentUser) {
-        router.push("/login");
-        return;
-      }
+      try {
+        const storedMembers = await dataService.getMembers();
+        console.log("Membres récupérés:", storedMembers);
+        
+        const mappedMembers = storedMembers.map((m: any) => ({
+          id: m.id,
+          firstName: m.first_name || m.firstName,
+          lastName: m.last_name || m.lastName,
+          promo: m.promo,
+          job: m.job,
+          sector: m.sector,
+          city: m.city,
+          country: m.country,
+          bio: m.bio,
+          avatar: m.avatar,
+          isNew: m.isNew
+        }));
 
-      const storedMembers = await dataService.getMembers();
-      setMembers([...storedMembers]);
+        setMembers(mappedMembers);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des membres:", error);
+      }
     };
 
     fetchMembers();
