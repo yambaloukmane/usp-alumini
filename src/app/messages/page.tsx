@@ -13,7 +13,7 @@ declare global {
 }
 
 interface Message {
-  id: number;
+  id: string;
   senderId: string;
   receiverId: string;
   text: string;
@@ -52,33 +52,106 @@ export default function Messages() {
   const audioPlayer = useRef<HTMLAudioElement | null>(null);
 
   const toggleAudio = (audioData: string, msgId: string) => {
-    if (isPlayingAudio === msgId) {
-      if (audioPlayer.current) {
-        audioPlayer.current.pause();
-        setIsPlayingAudio(null);
+    try {
+      if (isPlayingAudio === msgId) {
+        if (audioPlayer.current) {
+          audioPlayer.current.pause();
+          setIsPlayingAudio(null);
+        }
+      } else {
+        if (audioPlayer.current) {
+          audioPlayer.current.pause();
+        }
+        const dataUrl = audioData.replace('[AUDIO]', '');
+        audioPlayer.current = new Audio(dataUrl);
+        audioPlayer.current.play().catch(e => console.error("Play failed", e));
+        setIsPlayingAudio(msgId);
+        audioPlayer.current.onended = () => setIsPlayingAudio(null);
+        audioPlayer.current.onerror = () => {
+          alert("Erreur lors de la lecture du message vocal.");
+          setIsPlayingAudio(null);
+        };
       }
-    } else {
-      if (audioPlayer.current) {
-        audioPlayer.current.pause();
-      }
-      const base64 = audioData.replace('[AUDIO]', '');
-      audioPlayer.current = new Audio(base64);
-      audioPlayer.current.play();
-      setIsPlayingAudio(msgId);
-      audioPlayer.current.onended = () => setIsPlayingAudio(null);
+    } catch (e) {
+      console.error("Audio error", e);
     }
   };
 
-  // Poll for new messages every 3 seconds
+  // Poll for new messages and update UI
   useEffect(() => {
-    if (!user || !selectedContact) return;
+    if (!user) return;
 
     const interval = setInterval(async () => {
-      const conv = await dataService.getConversation(user.email, selectedContact.id);
-      setMessages(conv.map(m => ({
-        ...m,
-        isMine: m.senderId === user.email
-      })));
+      try {
+        // Poll for contacts list and last messages
+        const members = await dataService.getMembers() || [];
+        const allMsgs = await dataService.getMessages() || [];
+        
+        const mappedContacts = members
+          .filter((m: any) => m && m.email !== user.email)
+          .map((m: any) => {
+            const conversation = allMsgs.filter((msg: any) => 
+              msg && (
+                (msg.sender_id === user.email && msg.receiver_id === m.email) ||
+                (msg.sender_id === m.email && msg.receiver_id === user.email)
+              )
+            );
+            const lastMsg = conversation.length > 0 ? conversation[conversation.length - 1] : null;
+            const unreadForThisContact = conversation.filter((msg: any) => 
+              (msg.receiver_id === user.email) && !msg.is_read
+            ).length;
+            
+            return {
+              id: m.email,
+              first_name: m.first_name || "Inconnu",
+              last_name: m.last_name || "",
+              promo: m.promo || "N/A",
+              job: m.job || "Membre",
+              avatar: m.avatar || "",
+              lastMessage: lastMsg ? (
+                lastMsg.text.startsWith('[AUDIO]') ? "🎤 Message vocal" : 
+                lastMsg.text.startsWith('[CALL]') ? "📞 Appel" : 
+                lastMsg.text
+              ) : "Démarrer une discussion...",
+              lastTime: lastMsg ? lastMsg.time : "",
+              isOnline: true,
+              unreadCount: unreadForThisContact
+            };
+          })
+          .sort((a: any, b: any) => (b.lastTime || "").localeCompare(a.lastTime || ""));
+        
+        setContacts(prev => {
+          if (JSON.stringify(prev) === JSON.stringify(mappedContacts)) return prev;
+          return mappedContacts;
+        });
+
+        // If a contact is selected, update messages
+        if (selectedContact) {
+          const conversation = allMsgs.filter((msg: any) => 
+            msg && (
+              (msg.sender_id === user.email && msg.receiver_id === selectedContact.id) ||
+              (msg.sender_id === selectedContact.id && msg.receiver_id === user.email)
+            )
+          );
+          const mappedMessages = conversation.map(m => ({
+            id: m.id,
+            senderId: m.sender_id,
+            receiverId: m.receiver_id,
+            text: m.text,
+            time: m.time,
+            isMine: m.sender_id === user.email
+          }));
+
+          setMessages(prev => {
+            if (prev.length === mappedMessages.length && prev[prev.length - 1]?.id === mappedMessages[mappedMessages.length - 1]?.id) {
+              return prev;
+            }
+            return mappedMessages;
+          });
+        }
+      } catch (e) {
+        console.error("Polling error", e);
+      }
     }, 3000);
 
     return () => clearInterval(interval);
@@ -255,19 +328,28 @@ export default function Messages() {
     loadUI();
   };
 
-  const startCall = (type: 'audio' | 'video') => {
+  const startCall = async (type: 'audio' | 'video') => {
     if (!selectedContact || !user) return;
     
     // Create a unique room name based on both user emails
     const ids = [user.email, selectedContact.id].sort();
     const roomName = `USP-ALUMNI-${ids[0]}-${ids[1]}`.replace(/[^a-zA-Z0-9-]/g, '-');
     
-    setShowCallUI({ type, status: 'calling', roomName });
+    // Send a signaling message
+    const msg = {
+      senderId: user.email,
+      receiverId: selectedContact.id,
+      text: `[CALL]${type}:${roomName}`,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+    await dataService.saveMessage(msg);
 
-    // Automatically transition to active after 2 seconds (simulating pickup)
-    setTimeout(() => {
-      setShowCallUI((prev: any) => prev ? { ...prev, status: 'active' } : null);
-    }, 2000);
+    setShowCallUI({ type, status: 'active', roomName });
+  };
+
+  const joinCall = (callData: string) => {
+    const [type, roomName] = callData.replace('[CALL]', '').split(':');
+    setShowCallUI({ type: type as any, status: 'active', roomName });
   };
 
   // Initialize Jitsi when status becomes active
@@ -520,6 +602,24 @@ export default function Messages() {
                               <span>🎤 Message vocal</span>
                               <span>{isPlayingAudio === msg.id.toString() ? "Lecture..." : "Prêt"}</span>
                             </div>
+                          </div>
+                        </div>
+                      ) : msg.text.startsWith('[CALL]') ? (
+                        <div className="flex items-center gap-4 py-1 min-w-[200px]">
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${msg.isMine ? 'bg-sky-400' : 'bg-sky-100'}`}>
+                            {msg.text.includes('video') ? <Video size={18} /> : <Phone size={18} />}
+                          </div>
+                          <div className="flex-grow">
+                            <p className="text-xs font-black uppercase tracking-widest mb-2">Appel {msg.text.includes('video') ? 'Vidéo' : 'Audio'}</p>
+                            {!msg.isMine && (
+                              <button 
+                                onClick={() => joinCall(msg.text)}
+                                className="px-4 py-1.5 bg-emerald-500 text-white rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-emerald-600 transition-colors shadow-lg shadow-emerald-500/20"
+                              >
+                                Rejoindre
+                              </button>
+                            )}
+                            {msg.isMine && <p className="text-[10px] font-bold opacity-60">Appel lancé</p>}
                           </div>
                         </div>
                       ) : (
