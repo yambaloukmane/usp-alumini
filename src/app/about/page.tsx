@@ -3,7 +3,7 @@ import { GraduationCap, Users, Globe, Target, Sparkles, ShieldCheck } from "luci
 export default function About() {
   const values = [
     { icon: <Target className="text-sky-500" />, title: "Excellence", desc: "Nous visons les plus hauts standards académiques et professionnels." },
-    { icon: <Users className="text-sky-500" />, title: "Solidarité", desc: "L'entraide entre les générations de diplômés est notre force." },
+    { icon: <Users className="text-sky-500" />, title: "Solidarité", desc: "L&apos;entraide entre les générations de diplômés est notre force." },
     { icon: <Globe className="text-sky-500" />, title: "Impact", desc: "Nos alumni transforment le monde à travers leurs innovations." },
   ];
 
@@ -16,11 +16,11 @@ export default function About() {
             Notre Mission
           </div>
           <h1 className="text-5xl lg:text-7xl font-black text-gray-900 tracking-tighter leading-none">
-            Unir l'élite de <br />
+            Unir l&apos;élite de <br />
             <span className="text-sky-500 text-6xl lg:text-8xl italic">Demain.</span>
           </h1>
           <p className="text-xl text-gray-500 font-bold leading-relaxed max-w-xl">
-            Depuis 2020, USP-ALUMNI s'est imposé comme le réseau d'excellence pour les anciens élèves de l'USP, favorisant la collaboration et l'innovation à l'échelle mondiale.
+            Depuis 2020, USP-ALUMNI s&apos;est imposé comme le réseau d&apos;excellence pour les anciens élèves de l&apos;USP, favorisant la collaboration et l&apos;innovation à l&apos;échelle mondiale.
           </p>
           <div className="flex flex-wrap gap-4">
             <div className="flex items-center gap-2 px-6 py-3 bg-gray-50 rounded-2xl border border-gray-100 font-black text-gray-700">
@@ -63,9 +63,9 @@ export default function About() {
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl -mr-32 -mb-32"></div>
         <div className="flex flex-col lg:flex-row items-center gap-16 relative z-10">
           <div className="flex-grow space-y-8">
-            <h2 className="text-4xl lg:text-6xl font-black leading-tight tracking-tighter">Votre parcours <br />ne s'arrête pas au <br /><span className="text-sky-400 italic">Diplôme.</span></h2>
+            <h2 className="text-4xl lg:text-6xl font-black leading-tight tracking-tighter">Votre parcours <br />ne s&apos;arrête pas au <br /><span className="text-sky-400 italic">Diplôme.</span></h2>
             <p className="text-sky-100/60 text-lg font-medium leading-relaxed max-w-lg">
-              Devenir membre d'USP-ALUMNI, c'est s'assurer un soutien constant et un accès direct aux meilleures opportunités du marché, portées par une communauté qui partage vos valeurs.
+              Devenir membre d&apos;USP-ALUMNI, c&apos;est s&apos;assurer un soutien constant et un accès direct aux meilleures opportunités du marché, portées par une communauté qui partage vos valeurs.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto">

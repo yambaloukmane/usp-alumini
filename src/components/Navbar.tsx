@@ -16,7 +16,7 @@ const Navbar = () => {
   const notifications = [
     { id: 1, title: "Nouveau membre", desc: "Marc DUPUIS vient de rejoindre le réseau.", time: "Il y a 5 min", icon: <UserPlus size={16} />, color: "bg-emerald-50 text-emerald-500" },
     { id: 2, title: "Événement à venir", desc: "Le gala annuel approche ! Inscrivez-vous.", time: "Hier", icon: <Sparkles size={16} />, color: "bg-sky-50 text-sky-500" },
-    { id: 3, title: "Nouveau message", desc: "Vous avez reçu un message de l'admin.", time: "Il y a 2h", icon: <MessageSquare size={16} />, color: "bg-amber-50 text-amber-500" },
+    { id: 3, title: "Nouveau message", desc: "Vous avez reçu un message de l&apos;admin.", time: "Il y a 2h", icon: <MessageSquare size={16} />, color: "bg-amber-50 text-amber-500" },
   ];
 
   const checkUser = async () => {
@@ -78,7 +78,13 @@ const Navbar = () => {
                     <Home size={18} className="sm:w-5 sm:h-5" />
                   </Link>
                   <Link href="/news" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Actualités">
-                    <Newspaper size={18} className="sm:w-5 sm:h-5" />
+                    <Newspaper size={18} className="sm:w-5 h-5" />
+                  </Link>
+                  <Link href="/jobs" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Emplois">
+                    <Briefcase size={18} className="sm:w-5 h-5" />
+                  </Link>
+                  <Link href="/about" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="À propos">
+                    <Info size={18} className="sm:w-5 h-5" />
                   </Link>
                   <Link href="/messages" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link relative" title="Messages">
                     <MessageSquare size={18} className="sm:w-5 sm:h-5" />

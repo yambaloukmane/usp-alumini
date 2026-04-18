@@ -2,7 +2,7 @@ import { Code, Layout, Server, Shield } from "lucide-react";
 
 export default function Services() {
   const services = [
-    { icon: <Layout />, title: "Design UI/UX", desc: "Création d'interfaces intuitives et attrayantes." },
+    { icon: <Layout />, title: "Design UI/UX", desc: "Création d&apos;interfaces intuitives et attrayantes." },
     { icon: <Code />, title: "Développement Web", desc: "Sites dynamiques robustes avec Next.js." },
     { icon: <Server />, title: "Hébergement", desc: "Solutions cloud performantes et sécurisées." },
     { icon: <Shield />, title: "Maintenance", desc: "Support technique et mises à jour continues." },

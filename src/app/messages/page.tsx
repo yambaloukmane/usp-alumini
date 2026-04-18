@@ -494,7 +494,7 @@ export default function Messages() {
                 )) : (
                   <div className="h-full flex flex-col items-center justify-center text-gray-300 gap-4 opacity-50">
                     <Sparkles size={48} />
-                    <p className="font-black uppercase tracking-widest text-xs">C'est le début d'une belle histoire...</p>
+                    <p className="font-black uppercase tracking-widest text-xs">C&apos;est le début d&apos;une belle histoire...</p>
                   </div>
                 )}
               </div>

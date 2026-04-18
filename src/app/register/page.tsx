@@ -87,10 +87,17 @@ export default function Register() {
       avatar: ""
     };
 
-    await dataService.saveMember(newMember);
+    const savedUser = await dataService.saveMember(newMember);
 
-    // Connexion automatique de l'utilisateur
-    dataService.setCurrentUser(newMember);
+    // Connexion automatique de l'utilisateur avec les données réelles de la DB (incluant l'ID UUID)
+    if (savedUser) {
+      dataService.setCurrentUser({
+        ...newMember,
+        id: savedUser.id
+      });
+    } else {
+      dataService.setCurrentUser(newMember);
+    }
 
     setIsSubmitting(false);
     setShowSuccess(true);
@@ -273,7 +280,7 @@ export default function Register() {
               </button>
 
               <p className="text-center text-xs text-gray-500 font-medium">
-                En vous inscrivant, vous acceptez nos conditions d'utilisation.
+                En vous inscrivant, vous acceptez nos conditions d&apos;utilisation.
               </p>
             </form>
           </>

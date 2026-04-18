@@ -63,7 +63,7 @@ export default function Members() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
       <div className="text-center mb-16">
         <h2 className="text-4xl font-black text-gray-900 tracking-tight">Annuaire des Membres</h2>
-        <p className="mt-4 text-xl text-gray-500 font-medium">Connectez-vous avec l'élite de l'USP à travers le monde.</p>
+        <p className="mt-4 text-xl text-gray-500 font-medium">Connectez-vous avec l&apos;élite de l&apos;USP à travers le monde.</p>
       </div>
 
       <div className="max-w-4xl mx-auto mb-16 space-y-4">
@@ -204,7 +204,7 @@ export default function Members() {
             <Search size={40} />
           </div>
           <h3 className="text-2xl font-black text-gray-900 mb-2">Aucun résultat</h3>
-          <p className="text-gray-500 font-medium">Réessayez avec d'autres critères de recherche.</p>
+          <p className="text-gray-500 font-medium">Réessayez avec d&apos;autres critères de recherche.</p>
         </div>
       )}
     </div>

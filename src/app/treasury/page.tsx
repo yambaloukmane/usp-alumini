@@ -25,7 +25,7 @@ export default function Treasury() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
       <div className="text-center mb-16">
         <h2 className="text-4xl font-black text-gray-900 tracking-tight">Service Trésorerie</h2>
-        <p className="mt-4 text-xl text-gray-500 font-medium">Gérez vos cotisations, dons et suivez l'utilisation des fonds du réseau.</p>
+        <p className="mt-4 text-xl text-gray-500 font-medium">Gérez vos cotisations, dons et suivez l&apos;utilisation des fonds du réseau.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -38,7 +38,7 @@ export default function Treasury() {
               <Wallet size={32} className="mb-6 opacity-80" />
               <h3 className="text-lg font-bold opacity-90">Ma Cotisation 2026</h3>
               <div className="text-4xl font-black mt-2">À Jour</div>
-              <p className="text-sky-100 text-sm mt-4 font-medium">Valable jusqu'au 31/12/2026</p>
+              <p className="text-sky-100 text-sm mt-4 font-medium">Valable jusqu&apos;au 31/12/2026</p>
             </div>
             <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-xl flex flex-col justify-between">
               <div className="flex justify-between items-start">
@@ -49,7 +49,7 @@ export default function Treasury() {
                 <h3 className="text-lg font-bold text-gray-900 mt-4">Total Dons Réseau</h3>
                 <div className="text-4xl font-black text-gray-900 mt-2">12 450 €</div>
               </div>
-              <p className="text-gray-400 text-sm mt-4 font-medium">Finançant 5 bourses d'études</p>
+              <p className="text-gray-400 text-sm mt-4 font-medium">Finançant 5 bourses d&apos;études</p>
             </div>
           </div>
 

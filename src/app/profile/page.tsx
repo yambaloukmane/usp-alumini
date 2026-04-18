@@ -218,7 +218,7 @@ export default function Profile() {
               {/* Secteur & Ville */}
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-black text-black mb-2 ml-1">Secteur d'activité</label>
+                  <label className="block text-sm font-black text-black mb-2 ml-1">Secteur d&apos;activité</label>
                   <div className="relative group">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 group-focus-within:text-sky-500">
                       <Briefcase size={18} />

@@ -21,7 +21,7 @@ export const dataService = {
   
   saveMember: async (member: any) => {
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('members')
         .upsert({
           email: member.email,
@@ -36,11 +36,14 @@ export const dataService = {
           country: member.country,
           bio: member.bio,
           avatar: member.avatar
-        }, { onConflict: 'email' });
+        }, { onConflict: 'email' })
+        .select();
       if (error) throw error;
       window.dispatchEvent(new Event("storage"));
+      return data ? data[0] : null;
     } catch (e) {
       console.error("Save member failed", e);
+      return null;
     }
   },
 
@@ -68,6 +71,20 @@ export const dataService = {
     window.dispatchEvent(new Event("storage"));
   },
 
+  deleteMember: async (id: string) => {
+    try {
+      if (!id) return;
+      const { error } = await supabase.from('members').delete().eq('id', id);
+      if (error) {
+        alert("Erreur Supabase : " + error.message);
+        throw error;
+      }
+      window.dispatchEvent(new Event("storage"));
+    } catch (e) {
+      console.error("Delete member failed", e);
+    }
+  },
+
   // News
   getNews: async () => {
     try {
@@ -89,6 +106,15 @@ export const dataService = {
     }
   },
 
+  deleteNews: async (id: string) => {
+    try {
+      const { error } = await supabase.from('news').delete().eq('id', id);
+      if (error) throw error;
+    } catch (e) {
+      console.error("Delete news failed", e);
+    }
+  },
+
   // Jobs
   getJobs: async () => {
     try {
@@ -107,6 +133,15 @@ export const dataService = {
       if (error) throw error;
     } catch (e) {
       console.error("Add job failed", e);
+    }
+  },
+
+  deleteJob: async (id: string) => {
+    try {
+      const { error } = await supabase.from('jobs').delete().eq('id', id);
+      if (error) throw error;
+    } catch (e) {
+      console.error("Delete job failed", e);
     }
   },
 

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { dataService } from "@/lib/dataService";
 
 interface Member {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   promo: string;
@@ -15,7 +15,7 @@ interface Member {
 }
 
 interface NewsItem {
-  id: number;
+  id: string;
   title: string;
   date: string;
   desc: string;
@@ -23,7 +23,7 @@ interface NewsItem {
 }
 
 interface JobOffer {
-  id: number;
+  id: string;
   title: string;
   company: string;
   location: string;
@@ -65,57 +65,56 @@ export default function Responsable() {
     const storedNews = await dataService.getNews();
     const storedJobs = await dataService.getJobs();
     
-    setMembers(storedMembers);
+    // Adapter les données Supabase aux interfaces si nécessaire
+    setMembers(storedMembers.map((m: any) => ({
+      id: m.id,
+      firstName: m.first_name,
+      lastName: m.last_name,
+      promo: m.promo,
+      job: m.job
+    })));
     setNews(storedNews);
     setJobs(storedJobs);
   };
 
-  const deleteMember = (id: number) => {
-    if (confirm("Voulez-vous vraiment supprimer ce membre ?")) {
-      const storedMembers = JSON.parse(localStorage.getItem("usp_members") || "[]");
-      const updatedStored = storedMembers.filter((m: Member) => m.id !== id);
-      localStorage.setItem("usp_members", JSON.stringify(updatedStored));
+  const deleteMember = async (id: string) => {
+    if (confirm("Voulez-vous vraiment supprimer ce membre ainsi que son avatar ?")) {
+      await dataService.deleteMember(id);
       loadData();
     }
   };
 
-  const deleteNews = (id: number) => {
+  const deleteNews = async (id: string) => {
     if (confirm("Supprimer cette actualité ?")) {
-      const updated = news.filter(n => n.id !== id);
-      localStorage.setItem("usp_news", JSON.stringify(updated));
-      setNews(updated);
+      await dataService.deleteNews(id);
+      loadData();
     }
   };
 
-  const deleteJob = (id: number) => {
+  const deleteJob = async (id: string) => {
     if (confirm("Supprimer cette offre ?")) {
-      const updated = jobs.filter(j => j.id !== id);
-      localStorage.setItem("usp_jobs", JSON.stringify(updated));
-      setJobs(updated);
+      await dataService.deleteJob(id);
+      loadData();
     }
   };
 
-  const addNews = (e: React.FormEvent) => {
+  const addNews = async (e: React.FormEvent) => {
     e.preventDefault();
     const item = { 
       ...newArticle, 
-      id: Date.now(), 
-      date: "Aujourd'hui",
+      date: new Date().toLocaleDateString('fr-FR'),
       img: newArticle.img || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=400&h=250&auto=format&fit=crop" 
     };
-    const updated = [item, ...news];
-    localStorage.setItem("usp_news", JSON.stringify(updated));
-    setNews(updated);
+    await dataService.addNews(item);
     setNewArticle({ title: "", desc: "", img: "" });
+    loadData();
   };
 
-  const addJob = (e: React.FormEvent) => {
+  const addJob = async (e: React.FormEvent) => {
     e.preventDefault();
-    const item = { ...newJob, id: Date.now() };
-    const updated = [item, ...jobs];
-    localStorage.setItem("usp_jobs", JSON.stringify(updated));
-    setJobs(updated);
+    await dataService.addJob(newJob);
     setNewJob({ title: "", company: "", location: "", salary: "", type: "CDI" });
+    loadData();
   };
 
   const handlePrint = () => {
@@ -272,7 +271,7 @@ export default function Responsable() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Titre de l'article</label>
+                <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Titre de l&apos;article</label>
                 <input 
                   type="text" 
                   required
@@ -297,7 +296,7 @@ export default function Responsable() {
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Contenu de l'article</label>
+              <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Contenu de l&apos;article</label>
               <textarea 
                 required
                 rows={4}
@@ -308,7 +307,7 @@ export default function Responsable() {
               ></textarea>
             </div>
             <button type="submit" className="bg-sky-500 text-white px-8 py-4 rounded-2xl font-black hover:bg-sky-600 transition-all shadow-xl shadow-sky-500/20 transform active:scale-95">
-              Publier l'actualité
+              Publier l&apos;actualité
             </button>
           </form>
 
@@ -337,7 +336,7 @@ export default function Responsable() {
           <form onSubmit={addJob} className="bg-white p-10 rounded-[2.5rem] shadow-2xl border border-gray-100 space-y-6">
             <h3 className="text-xl font-black text-gray-900 flex items-center gap-2">
               <Plus className="text-sky-500" />
-              Ajouter une Offre d'Emploi
+              Ajouter une Offre d&apos;Emploi
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
@@ -378,7 +377,7 @@ export default function Responsable() {
               </div>
             </div>
             <button type="submit" className="bg-sky-500 text-white px-8 py-4 rounded-2xl font-black hover:bg-sky-600 transition-all shadow-xl shadow-sky-500/20 transform active:scale-95">
-              Ajouter l'offre
+              Ajouter l&apos;offre
             </button>
           </form>
 
