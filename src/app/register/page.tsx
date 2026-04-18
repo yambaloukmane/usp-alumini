@@ -87,6 +87,14 @@ export default function Register() {
     };
 
     try {
+      // Diagnostic de connexion
+      const connectionStatus = await dataService.checkConnection();
+      if (connectionStatus !== "OK") {
+        setError(connectionStatus);
+        setIsSubmitting(false);
+        return;
+      }
+
       const savedUser = await dataService.saveMember(newMember);
 
       if (savedUser) {

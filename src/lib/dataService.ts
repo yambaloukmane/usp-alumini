@@ -8,6 +8,21 @@ import { supabase } from './supabase';
 
 export const dataService = {
   // Members & Auth
+  checkConnection: async () => {
+    try {
+      const { error } = await supabase.from('members').select('count', { count: 'exact', head: true });
+      if (error) {
+        if (error.message.includes('fetch')) {
+          return "Erreur de connexion : Vérifiez votre URL Supabase dans Vercel.";
+        }
+        return "Erreur API : " + error.message;
+      }
+      return "OK";
+    } catch (e: any) {
+      return "Erreur réseau : " + (e.message || "Impossible de joindre Supabase");
+    }
+  },
+
   getMembers: async () => {
     try {
       const { data, error } = await supabase

@@ -19,6 +19,14 @@ export default function Login() {
     setError("");
 
     try {
+      // Diagnostic de connexion
+      const connectionStatus = await dataService.checkConnection();
+      if (connectionStatus !== "OK") {
+        setError(connectionStatus);
+        setIsSubmitting(false);
+        return;
+      }
+
       const user = await dataService.login(formData.email, formData.password);
 
       if (user) {
