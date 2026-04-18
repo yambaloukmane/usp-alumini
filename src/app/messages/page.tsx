@@ -152,7 +152,7 @@ export default function Messages() {
       } catch (e) {
         console.error("Polling error", e);
       }
-    }, 3000);
+    }, 300);
 
     return () => clearInterval(interval);
   }, [user, selectedContact]);
@@ -217,7 +217,7 @@ export default function Messages() {
           avatar: m.avatar || "",
           lastMessage: lastMsg ? (lastMsg.text.startsWith('[AUDIO]') ? "🎤 Message vocal" : lastMsg.text) : "Démarrer une discussion...",
           lastTime: lastMsg ? lastMsg.time : "",
-          isOnline: Math.random() > 0.4,
+          isOnline: true,
           unreadCount: unreadForThisContact
         };
       })
@@ -258,17 +258,26 @@ export default function Messages() {
     if (e) e.preventDefault();
     if (!newMessage.trim() || !selectedContact || !user) return;
 
-    const msg = {
-      id: Date.now(),
+    const msg: Message = {
+      id: Date.now().toString(),
       senderId: user.email,
       receiverId: selectedContact.id,
       text: newMessage,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      isMine: true
     };
 
-    await dataService.saveMessage(msg);
+    // Optimistic Update
+    setMessages(prev => [...prev, msg]);
     setNewMessage("");
-    loadUI(); // Refresh sidebar
+
+    await dataService.saveMessage({
+      senderId: msg.senderId,
+      receiverId: msg.receiverId,
+      text: msg.text,
+      time: msg.time
+    });
+    // loadUI() call removed as polling handles it very fast now
   };
 
   // Voice Recording Logic
@@ -317,15 +326,24 @@ export default function Messages() {
 
   const handleSendVoiceMessage = async (audioData: string) => {
     if (!selectedContact || !user) return;
-    const msg = {
-      id: Date.now(),
+    const msg: Message = {
+      id: Date.now().toString(),
       senderId: user.email,
       receiverId: selectedContact.id,
       text: `[AUDIO]${audioData}`,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      isMine: true
     };
-    await dataService.saveMessage(msg);
-    loadUI();
+    
+    // Optimistic Update
+    setMessages(prev => [...prev, msg]);
+
+    await dataService.saveMessage({
+      senderId: msg.senderId,
+      receiverId: msg.receiverId,
+      text: msg.text,
+      time: msg.time
+    });
   };
 
   const startCall = async (type: 'audio' | 'video') => {
