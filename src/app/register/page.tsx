@@ -72,17 +72,17 @@ export default function Register() {
     setIsSubmitting(true);
 
     const newMember = {
-      firstName: formData.prenom,
-      lastName: formData.nom,
+      first_name: formData.prenom,
+      last_name: formData.nom,
       email: formData.email,
       phone: formData.phone,
       password: formData.password,
       promo: formData.promoYear || new Date().getFullYear().toString(),
       job: formData.formationStatus || "Nouveau Membre",
-      sector: formData.sector,
-      city: formData.city,
-      country: formData.country,
-      bio: formData.bio,
+      sector: formData.sector || "Non défini",
+      city: formData.city || "Non définie",
+      country: formData.country || "Non défini",
+      bio: formData.bio || "Bonjour ! Je viens de rejoindre le réseau USP.",
       isNew: true,
       avatar: ""
     };

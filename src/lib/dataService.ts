@@ -26,8 +26,8 @@ export const dataService = {
         .upsert({
           email: member.email,
           password: member.password,
-          first_name: member.firstName,
-          last_name: member.lastName,
+          first_name: member.first_name,
+          last_name: member.last_name,
           phone: member.phone,
           promo: member.promo,
           job: member.job,
