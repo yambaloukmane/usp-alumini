@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect, useRef } from "react";
-import { Home, Info, Users, ShieldCheck, LogIn, UserPlus, User as UserIcon, Newspaper, Bell, Sparkles, MessageSquare, Clock, Wallet } from 'lucide-react';
+import { Home, Info, Users, ShieldCheck, LogIn, UserPlus, User as UserIcon, Newspaper, Bell, Sparkles, MessageSquare, Clock, Wallet, Briefcase } from 'lucide-react';
 import { dataService } from '@/lib/dataService';
 
 const Navbar = () => {
