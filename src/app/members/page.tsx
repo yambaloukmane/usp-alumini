@@ -159,7 +159,11 @@ export default function Members() {
             {/* Contenu Card */}
             <div className="px-6 pb-8 -mt-12 flex-grow">
               <div className="w-24 h-24 bg-sky-50 rounded-3xl p-1 shadow-lg mb-4 ring-4 ring-white relative overflow-hidden flex items-center justify-center text-sky-500">
-                <UserIcon size={40} />
+                {member.avatar ? (
+                  <img src={member.avatar} alt={member.firstName} className="w-full h-full object-cover" />
+                ) : (
+                  <UserIcon size={40} />
+                )}
               </div>
               
               <h3 className="text-xl font-black text-gray-900 group-hover:text-sky-600 transition-colors leading-tight">
