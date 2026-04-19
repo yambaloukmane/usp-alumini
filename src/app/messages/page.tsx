@@ -50,6 +50,8 @@ export default function Messages() {
   
   const [isPlayingAudio, setIsPlayingAudio] = useState<string | null>(null);
   const audioPlayer = useRef<HTMLAudioElement | null>(null);
+  const lastMsgIdRef = useRef<string | null>(null);
+  const justSentRef = useRef(false);
 
   const toggleAudio = (audioData: string, msgId: string) => {
     try {
@@ -236,6 +238,7 @@ export default function Messages() {
   useEffect(() => {
     const fetchChat = async () => {
       if (selectedContact && user) {
+        lastMsgIdRef.current = null; // Reset for new contact
         await dataService.markAsRead(user.email, selectedContact.id);
         const chat = await dataService.getConversation(user.email, selectedContact.id);
         setMessages(chat.map((m: any) => ({
@@ -250,14 +253,28 @@ export default function Messages() {
 
   // Auto-scroll to bottom only when needed
   useEffect(() => {
-    if (scrollRef.current) {
+    if (scrollRef.current && messages.length > 0) {
       const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+      // Define a "bottom" zone (if user is within 150px of bottom)
       const isNearBottom = scrollHeight - scrollTop - clientHeight < 150;
       const lastMessage = messages[messages.length - 1];
       
-      // Scroll if near bottom OR if the last message is from me
-      if (isNearBottom || (lastMessage && lastMessage.isMine)) {
-        scrollRef.current.scrollTop = scrollHeight;
+      // Check if this is really a new message (different from last recorded)
+      if (lastMessage.id !== lastMsgIdRef.current) {
+        // Scroll only if:
+        // 1. It's the first load for this contact (ref is null)
+        // 2. OR we just sent a message (justSentRef is true)
+        // 3. OR the user is already near the bottom (watching new messages)
+        if (lastMsgIdRef.current === null || justSentRef.current || isNearBottom) {
+          // Use a small timeout to ensure the DOM has rendered the new content
+          setTimeout(() => {
+            if (scrollRef.current) {
+              scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+            }
+          }, 50);
+          justSentRef.current = false;
+        }
+        lastMsgIdRef.current = lastMessage.id.toString();
       }
     }
   }, [messages]);
@@ -276,6 +293,7 @@ export default function Messages() {
     };
 
     // Optimistic Update
+    justSentRef.current = true;
     setMessages(prev => [...prev, msg]);
     setNewMessage("");
 
@@ -344,6 +362,7 @@ export default function Messages() {
     };
     
     // Optimistic Update
+    justSentRef.current = true;
     setMessages(prev => [...prev, msg]);
 
     await dataService.saveMessage({
