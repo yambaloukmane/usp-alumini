@@ -248,9 +248,17 @@ export default function Messages() {
     fetchChat();
   }, [selectedContact, user]);
 
+  // Auto-scroll to bottom only when needed
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
+      const isNearBottom = scrollHeight - scrollTop - clientHeight < 150;
+      const lastMessage = messages[messages.length - 1];
+      
+      // Scroll if near bottom OR if the last message is from me
+      if (isNearBottom || (lastMessage && lastMessage.isMine)) {
+        scrollRef.current.scrollTop = scrollHeight;
+      }
     }
   }, [messages]);
 
@@ -453,7 +461,7 @@ export default function Messages() {
             </div>
           </div>
 
-          <div className="flex-grow overflow-y-auto px-3 pb-6 space-y-2 no-scrollbar">
+          <div className="flex-grow overflow-y-auto px-3 pb-6 space-y-2">
             {filteredContacts.length > 0 ? filteredContacts.map((contact) => (
               <button
                 key={contact.id}
@@ -507,7 +515,7 @@ export default function Messages() {
         </div>
 
         {/* Chat Area */}
-        <div className={`flex-grow flex flex-col bg-white ${isMobileView && selectedContact ? 'flex' : 'hidden md:flex'}`}>
+        <div className={`flex-grow flex flex-col bg-white min-h-0 ${isMobileView && selectedContact ? 'flex' : 'hidden md:flex'}`}>
           {selectedContact ? (
             <>
               {/* Header */}
@@ -593,7 +601,7 @@ export default function Messages() {
               {/* Messages History */}
               <div 
                 ref={scrollRef}
-                className="flex-grow overflow-y-auto p-8 space-y-10 bg-gray-50/30"
+                className="flex-grow overflow-y-auto p-8 space-y-10 bg-gray-50/30 min-h-0"
               >
                 {messages.length > 0 ? messages.map((msg) => (
                   <div key={msg.id} className={`flex items-end gap-3 ${msg.isMine ? 'flex-row-reverse' : 'flex-row'}`}>
