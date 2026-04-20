@@ -26,7 +26,7 @@ export default function Profile() {
   useEffect(() => {
     const currentUser = dataService.getCurrentUser();
     if (!currentUser) {
-      router.push("/login");
+      router.push("/");
     } else {
       setUser(currentUser);
       setFormData({

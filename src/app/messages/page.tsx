@@ -195,7 +195,7 @@ export default function Messages() {
   const loadUI = async () => {
     const currentUser = dataService.getCurrentUser();
     if (!currentUser) {
-      if (typeof window !== "undefined") router.push("/login");
+      if (typeof window !== "undefined") router.push("/");
       return;
     }
     setUser(currentUser);

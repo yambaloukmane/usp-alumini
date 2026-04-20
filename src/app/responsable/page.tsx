@@ -48,7 +48,7 @@ export default function Responsable() {
     // Check if user is logged in at all
     const currentUser = localStorage.getItem("usp_current_user");
     if (!currentUser) {
-      router.push("/login");
+      router.push("/");
       return;
     }
 
@@ -123,7 +123,7 @@ export default function Responsable() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === "admin123") {
+    if (password === "AEPS2024") {
       setIsAuthenticated(true);
       localStorage.setItem("usp_admin_authenticated", "true");
     } else {
@@ -163,7 +163,7 @@ export default function Responsable() {
           </form>
           <div className="mt-6 p-4 bg-amber-50 border border-amber-100 rounded-lg flex items-start gap-3">
             <AlertCircle className="text-amber-500 flex-shrink-0" size={18} />
-            <p className="text-[12px] text-amber-700">Note: Le mot de passe par défaut pour le test est <strong>admin123</strong>.</p>
+            <p className="text-[12px] text-amber-700">Note: Le code d&apos;accès est <strong>AEPS2024</strong>.</p>
           </div>
         </div>
       </div>
