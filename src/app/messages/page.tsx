@@ -52,14 +52,13 @@ export default function Messages() {
   const audioPlayer = useRef<HTMLAudioElement | null>(null);
   const lastMsgIdRef = useRef<string | null>(null);
   const justSentRef = useRef(false);
-  const [isAtBottom, setIsAtBottom] = useState(true);
+  const isAtBottomRef = useRef(true);
 
   const handleScroll = () => {
     if (scrollRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
-      // User is at bottom if they are within 50px of the end
-      const nearBottom = scrollHeight - scrollTop - clientHeight < 50;
-      setIsAtBottom(nearBottom);
+      // User is at bottom if they are within 100px of the end
+      isAtBottomRef.current = scrollHeight - scrollTop - clientHeight < 100;
     }
   };
 
@@ -261,29 +260,36 @@ export default function Messages() {
     fetchChat();
   }, [selectedContact, user]);
 
-  // Auto-scroll logic
+  // Auto-scroll logic (ONLY run when messages change)
   useEffect(() => {
-    if (scrollRef.current && messages.length > 0) {
+    const container = scrollRef.current;
+    if (container && messages.length > 0) {
       const lastMessage = messages[messages.length - 1];
+      const currentId = lastMessage.id.toString();
       
-      // Check if this is really a new message
-      if (lastMessage.id !== lastMsgIdRef.current) {
-        // Scroll only if:
-        // 1. First load (null)
-        // 2. We just sent it
-        // 3. User is already following the conversation at the bottom
-        if (lastMsgIdRef.current === null || justSentRef.current || isAtBottom) {
-          const target = scrollRef.current;
-          // Use requestAnimationFrame for smoother and more reliable scroll
+      // We scroll if:
+      // 1. It's the first time loading messages for this contact (ref is null)
+      // 2. OR we just sent a message (user expects to see it)
+      // 3. OR the user was already following the chat at the bottom
+      if (lastMsgIdRef.current === null || justSentRef.current || isAtBottomRef.current) {
+        // Only scroll if the message list actually has new content
+        if (lastMsgIdRef.current !== currentId) {
+          // Use requestAnimationFrame for most reliable timing
           requestAnimationFrame(() => {
-            target.scrollTop = target.scrollHeight;
+            if (scrollRef.current) {
+              scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+              // Ensure we remember we're at the bottom now
+              isAtBottomRef.current = true;
+            }
           });
           justSentRef.current = false;
         }
-        lastMsgIdRef.current = lastMessage.id.toString();
       }
+      
+      // Record this message ID for next time
+      lastMsgIdRef.current = currentId;
     }
-  }, [messages, isAtBottom]);
+  }, [messages]);
 
   const handleSendMessage = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
