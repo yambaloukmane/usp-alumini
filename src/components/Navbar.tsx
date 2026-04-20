@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect, useRef } from "react";
-import { Home, Info, Users, ShieldCheck, LogIn, UserPlus, User as UserIcon, Newspaper, Bell, Sparkles, MessageSquare, Clock, Wallet, Briefcase } from 'lucide-react';
+import { Home, Users, ShieldCheck, LogIn, UserPlus, User as UserIcon, Newspaper, Bell, Sparkles, MessageSquare, Clock, Wallet, Briefcase } from 'lucide-react';
 import { dataService } from '@/lib/dataService';
 
 const Navbar = () => {
@@ -82,9 +82,6 @@ const Navbar = () => {
                   </Link>
                   <Link href="/jobs" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Emplois">
                     <Briefcase size={18} className="sm:w-5 h-5" />
-                  </Link>
-                  <Link href="/about" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="À propos">
-                    <Info size={18} className="sm:w-5 h-5" />
                   </Link>
                   <Link href="/messages" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link relative" title="Messages">
                     <MessageSquare size={18} className="sm:w-5 sm:h-5" />
