@@ -57,8 +57,8 @@ export default function Messages() {
   const handleScroll = () => {
     if (scrollRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
-      // User is at bottom if they are within 100px of the end
-      isAtBottomRef.current = scrollHeight - scrollTop - clientHeight < 100;
+      // We are at bottom if the distance to bottom is less than 50px
+      isAtBottomRef.current = scrollHeight - scrollTop - clientHeight < 50;
     }
   };
 
@@ -260,34 +260,31 @@ export default function Messages() {
     fetchChat();
   }, [selectedContact, user]);
 
-  // Auto-scroll logic (ONLY run when messages change)
+  // Auto-scroll logic (Robust version)
   useEffect(() => {
     const container = scrollRef.current;
     if (container && messages.length > 0) {
       const lastMessage = messages[messages.length - 1];
       const currentId = lastMessage.id.toString();
       
-      // We scroll if:
-      // 1. It's the first time loading messages for this contact (ref is null)
-      // 2. OR we just sent a message (user expects to see it)
-      // 3. OR the user was already following the chat at the bottom
-      if (lastMsgIdRef.current === null || justSentRef.current || isAtBottomRef.current) {
-        // Only scroll if the message list actually has new content
-        if (lastMsgIdRef.current !== currentId) {
-          // Use requestAnimationFrame for most reliable timing
-          requestAnimationFrame(() => {
+      // If messages actually changed
+      if (lastMsgIdRef.current !== currentId) {
+        // We only scroll if:
+        // 1. First time (null)
+        // 2. Just sent a message
+        // 3. User was already at the bottom
+        if (lastMsgIdRef.current === null || justSentRef.current || isAtBottomRef.current) {
+          // Use a small timeout to ensure DOM has rendered
+          setTimeout(() => {
             if (scrollRef.current) {
               scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-              // Ensure we remember we're at the bottom now
               isAtBottomRef.current = true;
             }
-          });
+          }, 30);
           justSentRef.current = false;
         }
+        lastMsgIdRef.current = currentId;
       }
-      
-      // Record this message ID for next time
-      lastMsgIdRef.current = currentId;
     }
   }, [messages]);
 
@@ -633,7 +630,7 @@ export default function Messages() {
               <div 
                 ref={scrollRef}
                 onScroll={handleScroll}
-                className="flex-grow overflow-y-auto p-8 space-y-10 bg-gray-50/30 min-h-0"
+                className="flex-grow overflow-y-auto p-8 space-y-10 bg-gray-50/30 min-h-0 overscroll-contain"
               >
                 {messages.length > 0 ? messages.map((msg) => (
                   <div key={msg.id} className={`flex items-end gap-3 ${msg.isMine ? 'flex-row-reverse' : 'flex-row'}`}>
