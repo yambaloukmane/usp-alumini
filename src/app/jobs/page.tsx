@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { Briefcase, MapPin, DollarSign, Clock, Sparkles, ArrowRight, Filter, Search } from "lucide-react";

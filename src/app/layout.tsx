@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "USP-ALUMNI - Réseau des Anciens Élèves",
-  description: "Portail dynamique pour la communauté USP-ALUMNI",
+  title: "Université Polytechnique de San-Pédro (UPSP)-ALUMNI - Réseau des Anciens Élèves",
+  description: "Portail dynamique pour la communauté Université Polytechnique de San-Pédro (UPSP)-ALUMNI",
 };
 
 export default function RootLayout({

@@ -1,4 +1,4 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 
 const Footer = () => {
   return (
@@ -10,22 +10,21 @@ const Footer = () => {
               <div className="relative w-10 h-10 overflow-hidden rounded-md border border-gray-200 bg-white p-0.5">
                 <Image 
                   src="https://sc01.alicdn.com/kf/A10cd1516dd12456686a3ce544d201eccS.jpeg" 
-                  alt="USP-ALUMNI Logo" 
+                  alt="Université Polytechnique de San-Pédro (UPSP)-ALUMNI Logo" 
                   fill
                   className="object-contain"
                 />
               </div>
-              <h3 className="text-sm font-bold text-gray-900 tracking-wider uppercase">USP-ALUMNI</h3>
+              <h3 className="text-sm font-bold text-gray-900 tracking-wider uppercase">Université Polytechnique de San-Pédro (UPSP)-ALUMNI</h3>
             </div>
             <p className="text-base text-gray-500 text-center md:text-left">
-              Le réseau dynamique des anciens élèves de l&apos;USP.
+              Le réseau dynamique des anciens élèves de l&apos;Université Polytechnique de San-Pédro (UPSP).
             </p>
           </div>
           <div>
             <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">Navigation</h3>
             <ul className="mt-4 space-y-4">
               <li><a href="/" className="text-base text-gray-500 hover:text-gray-900">Accueil</a></li>
-              <li><a href="/about" className="text-base text-gray-500 hover:text-gray-900">À propos</a></li>
               <li><a href="/services" className="text-base text-gray-500 hover:text-gray-900">Services</a></li>
             </ul>
           </div>
@@ -38,7 +37,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-200 pt-8 text-center">
-          <p className="text-base text-gray-400">&copy; 2026 USP-ALUMNI Inc. Tous droits réservés.</p>
+          <p className="text-base text-gray-400">&copy; 2026 Université Polytechnique de San-Pédro (UPSP)-ALUMNI Inc. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

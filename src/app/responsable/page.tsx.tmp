@@ -1,4 +1,4 @@
-ï»¿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { Trash2, FileDown, ShieldCheck, AlertCircle, Newspaper, Briefcase, Plus, X, Image as ImageIcon } from "lucide-react";
@@ -45,8 +45,12 @@ export default function Responsable() {
   const [newJob, setNewJob] = useState({ title: "", company: "", location: "", salary: "", type: "CDI" });
 
   useEffect(() => {
+    // Check if user is logged in at all
+      router.push("/");
+    }
+
     loadData();
-    // VÃ©rifier si dÃ©jÃ  authentifiÃ© admin
+    // Vérifier si déjà authentifié admin
     const adminAuth = localStorage.getItem("usp_admin_authenticated");
     if (adminAuth === "true") {
       setIsAuthenticated(true);
@@ -58,7 +62,7 @@ export default function Responsable() {
     const storedNews = await dataService.getNews();
     const storedJobs = await dataService.getJobs();
     
-    // Adapter les donnÃ©es Supabase aux interfaces si nÃ©cessaire
+    // Adapter les données Supabase aux interfaces si nécessaire
     setMembers(storedMembers.map((m: any) => ({
       id: m.id,
       first_name: m.first_name,
@@ -78,7 +82,7 @@ export default function Responsable() {
   };
 
   const deleteNews = async (id: string) => {
-    if (confirm("Supprimer cette actualitÃ© ?")) {
+    if (confirm("Supprimer cette actualité ?")) {
       await dataService.deleteNews(id);
       loadData();
     }
@@ -137,8 +141,8 @@ export default function Responsable() {
             <div className="mx-auto w-12 h-12 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center mb-4">
               <ShieldCheck size={24} />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900">AccÃ¨s Responsable</h2>
-            <p className="text-sm text-gray-500 mt-2">Veuillez saisir votre mot de passe pour accÃ©der Ã  la gestion.</p>
+            <h2 className="text-2xl font-bold text-gray-900">Accès Responsable</h2>
+            <p className="text-sm text-gray-500 mt-2">Veuillez saisir votre mot de passe pour accéder à la gestion.</p>
           </div>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
@@ -156,7 +160,7 @@ export default function Responsable() {
           </form>
           <div className="mt-6 p-4 bg-amber-50 border border-amber-100 rounded-lg flex items-start gap-3">
             <AlertCircle className="text-amber-500 flex-shrink-0" size={18} />
-            <p className="text-[12px] text-amber-700">Note: Le code d'accÃ¨s est <strong>AEPS2024</strong>.</p>
+            <p className="text-[12px] text-amber-700">Note: Le code d&apos;accès est <strong>AEPS2024</strong>.</p>
           </div>
         </div>
       </div>
@@ -168,7 +172,7 @@ export default function Responsable() {
       <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6 print:hidden">
         <div>
           <h1 className="text-4xl font-black text-gray-900 tracking-tight">Espace Responsable</h1>
-          <p className="text-gray-500 font-medium">Gestion centralisÃ©e du rÃ©seau UniversitÃ© Polytechnique de San-PÃ©dro (UPSP)-ALUMNI.</p>
+          <p className="text-gray-500 font-medium">Gestion centralisée du réseau Université Polytechnique de San-Pédro (UPSP)-ALUMNI.</p>
         </div>
         <div className="flex gap-4">
           <button
@@ -183,7 +187,7 @@ export default function Responsable() {
             className="flex items-center gap-2 bg-red-50 text-red-600 border-2 border-red-50 px-6 py-3 rounded-2xl font-black hover:bg-red-100 transition-all shadow-xl shadow-red-200/20"
           >
             <ShieldCheck size={20} />
-            DÃ©connexion
+            Déconnexion
           </button>
         </div>
       </div>
@@ -202,7 +206,7 @@ export default function Responsable() {
           className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-[1.5rem] font-black text-sm transition-all ${activeTab === "news" ? 'bg-white text-sky-500 shadow-md' : 'text-gray-500 hover:text-gray-700'}`}
         >
           <Newspaper size={18} />
-          ActualitÃ©s
+          Actualités
         </button>
         <button 
           onClick={() => setActiveTab("jobs")}
@@ -220,9 +224,9 @@ export default function Responsable() {
             <table className="w-full text-left border-collapse">
               <thead className="bg-gray-50 print:bg-white border-b border-gray-200">
                 <tr>
-                  <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest">Nom & PrÃ©nom</th>
+                  <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest">Nom & Prénom</th>
                   <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest">Promotion</th>
-                  <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest">Formation / MÃ©tier</th>
+                  <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest">Formation / Métier</th>
                   <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest text-right print:hidden">Actions</th>
                 </tr>
               </thead>
@@ -260,15 +264,15 @@ export default function Responsable() {
           <form onSubmit={addNews} className="bg-white p-10 rounded-[2.5rem] shadow-2xl border border-gray-100 space-y-6">
             <h3 className="text-xl font-black text-gray-900 flex items-center gap-2">
               <Plus className="text-sky-500" />
-              Publier une ActualitÃ©
+              Publier une Actualité
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Titre de l'article</label>
+                <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Titre de l&apos;article</label>
                 <input 
                   type="text" 
                   required
-                  placeholder="Ex: Nouveau succÃ¨s pour l'UniversitÃ© Polytechnique de San-PÃ©dro (UPSP)..."
+                  placeholder="Ex: Nouveau succès pour l'Université Polytechnique de San-Pédro (UPSP)..."
                   className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 font-bold"
                   value={newArticle.title}
                   onChange={e => setNewArticle({...newArticle, title: e.target.value})}
@@ -289,18 +293,18 @@ export default function Responsable() {
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Contenu de l'article</label>
+              <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Contenu de l&apos;article</label>
               <textarea 
                 required
                 rows={4}
-                placeholder="RÃ©digez votre article ici..."
+                placeholder="Rédigez votre article ici..."
                 className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 font-bold"
                 value={newArticle.desc}
                 onChange={e => setNewArticle({...newArticle, desc: e.target.value})}
               ></textarea>
             </div>
             <button type="submit" className="bg-sky-500 text-white px-8 py-4 rounded-2xl font-black hover:bg-sky-600 transition-all shadow-xl shadow-sky-500/20 transform active:scale-95">
-              Publier l'actualitÃ©
+              Publier l&apos;actualité
             </button>
           </form>
 
@@ -329,13 +333,13 @@ export default function Responsable() {
           <form onSubmit={addJob} className="bg-white p-10 rounded-[2.5rem] shadow-2xl border border-gray-100 space-y-6">
             <h3 className="text-xl font-black text-gray-900 flex items-center gap-2">
               <Plus className="text-sky-500" />
-              Ajouter une Offre d'Emploi
+              Ajouter une Offre d&apos;Emploi
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">IntitulÃ© du poste</label>
+                <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">Intitulé du poste</label>
                 <input 
-                  type="text" required placeholder="Ex: DÃ©veloppeur React"
+                  type="text" required placeholder="Ex: Développeur React"
                   className="w-full px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:ring-4 focus:ring-sky-500/10 focus:border-sky-500 font-bold"
                   value={newJob.title}
                   onChange={e => setNewJob({...newJob, title: e.target.value})}
@@ -370,7 +374,7 @@ export default function Responsable() {
               </div>
             </div>
             <button type="submit" className="bg-sky-500 text-white px-8 py-4 rounded-2xl font-black hover:bg-sky-600 transition-all shadow-xl shadow-sky-500/20 transform active:scale-95">
-              Ajouter l'offre
+              Ajouter l&apos;offre
             </button>
           </form>
 
@@ -383,7 +387,7 @@ export default function Responsable() {
                   </div>
                   <div>
                     <h4 className="font-black text-gray-900">{job.title}</h4>
-                    <p className="text-xs text-sky-600 font-bold">{job.company} â€¢ {job.location}</p>
+                    <p className="text-xs text-sky-600 font-bold">{job.company} • {job.location}</p>
                   </div>
                 </div>
                 <button onClick={() => deleteJob(job.id)} className="text-red-400 hover:text-red-600 p-3 hover:bg-red-50 rounded-2xl transition-all">

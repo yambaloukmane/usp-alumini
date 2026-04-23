@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle, Globe, GraduationCap, Users, Zap, Briefcase, Newspaper, Sparkles } from "lucide-react";
+﻿import { ArrowRight, CheckCircle, Globe, GraduationCap, Users, Zap, Briefcase, Newspaper, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -10,11 +10,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <div className="inline-flex items-center gap-2 bg-sky-50 text-sky-600 px-6 py-2 rounded-full font-black text-xs uppercase tracking-widest mb-8 border border-sky-100 shadow-xl shadow-sky-500/10">
             <Sparkles size={14} />
-            Le réseau d&apos;excellence de l&apos;USP
+            Le réseau d&apos;excellence de l&apos;Université Polytechnique de San-Pédro (UPSP)
           </div>
           <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black text-gray-900 tracking-tighter leading-[0.9]">
             Propulsez votre <br />
-            <span className="text-sky-500">Carrière avec USP</span>
+            <span className="text-sky-500">Carrière avec Université Polytechnique de San-Pédro (UPSP)</span>
           </h1>
           <p className="mt-8 text-xl text-gray-500 font-bold max-w-2xl mx-auto leading-relaxed">
             Rejoignez la plateforme officielle des anciens élèves. <br />
@@ -71,12 +71,9 @@ export default function Home() {
                 <span className="text-sky-500">Mille opportunités.</span>
               </h2>
               <p className="text-gray-500 font-bold text-lg leading-relaxed">
-                USP-ALUMNI n&apos;est pas qu&apos;un annuaire. C&apos;est un accélérateur de réussite pour tous ses membres.
+                Université Polytechnique de San-Pédro (UPSP)-ALUMNI n&apos;est pas qu&apos;un annuaire. C&apos;est un accélérateur de réussite pour tous ses membres.
               </p>
             </div>
-            <Link href="/about" className="px-8 py-4 bg-sky-50 text-sky-600 rounded-2xl font-black text-sm hover:bg-sky-500 hover:text-white transition-all border border-sky-100 mb-2">
-              Découvrir notre mission
-            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -118,7 +115,7 @@ export default function Home() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-48 -mt-48 blur-3xl"></div>
         <div className="max-w-5xl mx-auto px-4 text-center text-white relative z-10">
           <h2 className="text-4xl sm:text-6xl font-black mb-8 leading-none">Prêt à faire partie <br />de l&apos;aventure ?</h2>
-          <p className="text-sky-100 text-xl font-bold mb-12 max-w-2xl mx-auto">Inscrivez-vous dès aujourd&apos;hui et commencez à explorer les possibilités du réseau USP.</p>
+          <p className="text-sky-100 text-xl font-bold mb-12 max-w-2xl mx-auto">Inscrivez-vous dès aujourd&apos;hui et commencez à explorer les possibilités du réseau Université Polytechnique de San-Pédro (UPSP).</p>
           <Link 
             href="/register" 
             className="inline-flex px-12 py-5 bg-white text-sky-600 font-black rounded-[2rem] hover:bg-sky-50 hover:scale-105 transition-all shadow-2xl shadow-sky-900/20 text-xl"

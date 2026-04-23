@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -82,7 +82,7 @@ export default function Register() {
       sector: formData.sector || "Non défini",
       city: formData.city || "Non définie",
       country: formData.country || "Non défini",
-      bio: formData.bio || "Bonjour ! Je viens de rejoindre le réseau USP.",
+      bio: formData.bio || "Bonjour ! Je viens de rejoindre le réseau Université Polytechnique de San-Pédro (UPSP).",
       avatar: ""
     };
 
@@ -126,7 +126,7 @@ export default function Register() {
             </div>
             <h2 className="text-3xl font-black text-black mb-4 tracking-tight">Félicitations !</h2>
             <p className="text-gray-500 font-bold mb-8 leading-relaxed">
-              Votre compte <span className="text-sky-500">USP-ALUMNI</span> a été créé avec succès.<br/>
+              Votre compte <span className="text-sky-500">Université Polytechnique de San-Pédro (UPSP)-ALUMNI</span> a été créé avec succès.<br/>
               Bienvenue dans le réseau des anciens élèves !
             </p>
             <div className="flex items-center justify-center gap-3 text-emerald-600 font-black text-sm uppercase tracking-widest bg-emerald-50 py-3 rounded-2xl">
@@ -138,7 +138,7 @@ export default function Register() {
           <>
             <div className="text-center">
               <h2 className="text-4xl font-black text-black tracking-tight">
-                Rejoignez USP-ALUMNI
+                Rejoignez Université Polytechnique de San-Pédro (UPSP)-ALUMNI
               </h2>
               <p className="mt-4 text-sm text-gray-600 font-bold">
                 Créez votre compte pour accéder au réseau

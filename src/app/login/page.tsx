@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -33,12 +33,12 @@ export default function Login() {
         router.push("/profile");
       } else {
         // Fallback for admin test account if not in DB
-        if (formData.email === "admin@usp.com" && formData.password === "admin") {
+        if (formData.email === "admin@upsp.com" && formData.password === "admin") {
           const adminUser = { 
             id: "admin-001", 
             first_name: "Admin", 
             last_name: "User", 
-            email: "admin@usp.com",
+            email: "admin@upsp.com",
             isAdmin: true 
           };
           dataService.setCurrentUser(adminUser);

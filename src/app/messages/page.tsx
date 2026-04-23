@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef } from "react";
 import { Send, User, Search, MessageSquare, Clock, ShieldCheck, Sparkles, Filter, ChevronLeft, Mic, Phone, Video, X, Play, Pause, Trash2 } from "lucide-react";
@@ -120,8 +120,8 @@ export default function Messages() {
               job: m.job || "Membre",
               avatar: m.avatar || "",
               lastMessage: lastMsg ? (
-                lastMsg.text.startsWith('[AUDIO]') ? "🎤 Message vocal" : 
-                lastMsg.text.startsWith('[CALL]') ? "📞 Appel" : 
+                lastMsg.text.startsWith('[AUDIO]') ? "ðŸŽ¤ Message vocal" : 
+                lastMsg.text.startsWith('[CALL]') ? "ðŸ“ž Appel" : 
                 lastMsg.text
               ) : "Démarrer une discussion...",
               lastTime: lastMsg ? lastMsg.time : "",
@@ -226,7 +226,7 @@ export default function Messages() {
           promo: m.promo || "N/A",
           job: m.job || "Membre",
           avatar: m.avatar || "",
-          lastMessage: lastMsg ? (lastMsg.text.startsWith('[AUDIO]') ? "🎤 Message vocal" : lastMsg.text) : "Démarrer une discussion...",
+          lastMessage: lastMsg ? (lastMsg.text.startsWith('[AUDIO]') ? "ðŸŽ¤ Message vocal" : lastMsg.text) : "Démarrer une discussion...",
           lastTime: lastMsg ? lastMsg.time : "",
           isOnline: true,
           unreadCount: unreadForThisContact
@@ -654,7 +654,7 @@ export default function Messages() {
                               <div className={`absolute left-0 top-0 bottom-0 ${isPlayingAudio === msg.id.toString() ? 'w-full transition-all duration-[10s]' : 'w-0'} ${msg.isMine ? 'bg-white' : 'bg-sky-500'}`}></div>
                             </div>
                             <div className="flex justify-between text-[10px] font-black opacity-60">
-                              <span>🎤 Message vocal</span>
+                              <span>ðŸŽ¤ Message vocal</span>
                               <span>{isPlayingAudio === msg.id.toString() ? "Lecture..." : "Prêt"}</span>
                             </div>
                           </div>

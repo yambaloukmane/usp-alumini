@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { Hammer, Sparkles, Clock, Newspaper, ArrowRight } from "lucide-react";
@@ -41,7 +41,7 @@ export default function News() {
           Actualités du Réseau
         </div>
         <h1 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight">Dernières Nouvelles</h1>
-        <p className="mt-4 text-xl text-gray-500 font-medium">Restez informé des activités de l&apos;USP et de ses diplômés.</p>
+        <p className="mt-4 text-xl text-gray-500 font-medium">Restez informé des activités de l&apos;Université Polytechnique de San-Pédro (UPSP) et de ses diplômés.</p>
       </div>
 
       {news.length === 0 ? (

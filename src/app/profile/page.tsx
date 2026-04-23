@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { User, Mail, GraduationCap, BookOpen, Save, LogOut, CheckCircle, MapPin, Briefcase, AlignLeft, Camera, Phone } from "lucide-react";

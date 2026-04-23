@@ -1,5 +1,5 @@
-/**
- * Data Service for USP-ALUMNI
+﻿/**
+ * Data Service for Université Polytechnique de San-Pédro (UPSP)-ALUMNI
  * This service abstracts data operations (Mebers, News, Jobs, Messages).
  * Currently uses localStorage but is structured for future API/DB integration.
  */

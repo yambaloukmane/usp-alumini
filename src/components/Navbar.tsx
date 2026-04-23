@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -58,50 +58,52 @@ const Navbar = () => {
         <div className="px-6 lg:px-8">
           <div className="flex justify-between h-20">
             <div className="flex items-center">
-              <Link href="/" className="flex-shrink-0 flex items-center gap-4 group" title="USP-ALUMNI - Accueil">
+              <Link href="/" className="flex-shrink-0 flex items-center gap-4 group" title="Université Polytechnique de San-Pédro (UPSP)-ALUMNI - Accueil">
                 <div className="relative w-14 h-14 overflow-hidden rounded-[1.25rem] border-2 border-white bg-white p-0.5 shadow-xl transition-transform group-hover:scale-110 group-active:scale-95 duration-300">
                   <Image 
                     src="https://sc01.alicdn.com/kf/A10cd1516dd12456686a3ce544d201eccS.jpeg" 
-                    alt="USP-ALUMNI Logo" 
+                    alt="Université Polytechnique de San-Pédro (UPSP)-ALUMNI Logo" 
                     fill
                     className="object-contain"
                   />
                 </div>
-                <span className="text-lg sm:text-xl font-black text-white tracking-tighter transition-all group-hover:tracking-normal hidden md:inline">USP-ALUMNI</span>
+                <span className="text-lg sm:text-xl font-black text-white tracking-tighter transition-all group-hover:tracking-normal hidden md:inline">Université Polytechnique de San-Pédro (UPSP)-ALUMNI</span>
               </Link>
             </div>
             
             <div className="flex items-center space-x-1 sm:space-x-2 lg:space-x-4">
-              {user && (
                 <div className="flex items-center gap-0.5 sm:gap-1 overflow-x-auto no-scrollbar max-w-[50vw] sm:max-w-none px-1">
-                  <Link href="/" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Accueil">
-                    <Home size={18} className="sm:w-5 sm:h-5" />
-                  </Link>
-                  <Link href="/news" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Actualités">
-                    <Newspaper size={18} className="sm:w-5 h-5" />
-                  </Link>
-                  <Link href="/jobs" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Emplois">
-                    <Briefcase size={18} className="sm:w-5 h-5" />
-                  </Link>
-                  <Link href="/messages" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link relative" title="Messages">
-                    <MessageSquare size={18} className="sm:w-5 sm:h-5" />
-                    {unreadCount > 0 && (
-                      <span className="absolute top-1 right-1 min-w-[14px] h-[14px] sm:min-w-[18px] sm:h-[18px] bg-red-500 text-white text-[8px] sm:text-[10px] font-black flex items-center justify-center rounded-full border-2 border-sky-400 px-0.5">
-                        {unreadCount}
-                      </span>
-                    )}
-                  </Link>
-                  <Link href="/members" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Membres">
-                    <Users size={18} className="sm:w-5 sm:h-5" />
-                  </Link>
-                  <Link href="/treasury" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Trésorerie">
-                    <Wallet size={18} className="sm:w-5 sm:h-5" />
-                  </Link>
                   <Link href="/responsable" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Admin">
                     <ShieldCheck size={18} className="sm:w-5 sm:h-5" />
                   </Link>
+                  {user && (
+                    <>
+                      <Link href="/" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Accueil">
+                        <Home size={18} className="sm:w-5 sm:h-5" />
+                      </Link>
+                      <Link href="/news" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Actualités">
+                        <Newspaper size={18} className="sm:w-5 h-5" />
+                      </Link>
+                      <Link href="/jobs" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Emplois">
+                        <Briefcase size={18} className="sm:w-5 h-5" />
+                      </Link>
+                      <Link href="/messages" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link relative" title="Messages">
+                        <MessageSquare size={18} className="sm:w-5 sm:h-5" />
+                        {unreadCount > 0 && (
+                          <span className="absolute top-1 right-1 min-w-[14px] h-[14px] sm:min-w-[18px] sm:h-[18px] bg-red-500 text-white text-[8px] sm:text-[10px] font-black flex items-center justify-center rounded-full border-2 border-sky-400 px-0.5">
+                            {unreadCount}
+                          </span>
+                        )}
+                      </Link>
+                      <Link href="/members" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Membres">
+                        <Users size={18} className="sm:w-5 sm:h-5" />
+                      </Link>
+                      <Link href="/treasury" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Trésorerie">
+                        <Wallet size={18} className="sm:w-5 sm:h-5" />
+                      </Link>
+                    </>
+                  )}
                 </div>
-              )}
 
               <div className="flex items-center gap-3 ml-4 pl-4 border-l border-white/20">
                 {/* Notification Bell */}
