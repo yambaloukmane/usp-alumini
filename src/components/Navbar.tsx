@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -16,7 +16,7 @@ const Navbar = () => {
   const notifications = [
     { id: 1, title: "Nouveau membre", desc: "Marc DUPUIS vient de rejoindre le réseau.", time: "Il y a 5 min", icon: <UserPlus size={16} />, color: "bg-emerald-50 text-emerald-500" },
     { id: 2, title: "Événement à venir", desc: "Le gala annuel approche ! Inscrivez-vous.", time: "Hier", icon: <Sparkles size={16} />, color: "bg-sky-50 text-sky-500" },
-    { id: 3, title: "Nouveau message", desc: "Vous avez reçu un message de l&apos;admin.", time: "Il y a 2h", icon: <MessageSquare size={16} />, color: "bg-amber-50 text-amber-500" },
+    { id: 3, title: "Nouveau message", desc: "Vous avez reçu un message de l'admin.", time: "Il y a 2h", icon: <MessageSquare size={16} />, color: "bg-amber-50 text-amber-500" },
   ];
 
   const checkUser = async () => {
@@ -58,16 +58,16 @@ const Navbar = () => {
         <div className="px-6 lg:px-8">
           <div className="flex justify-between h-20">
             <div className="flex items-center">
-              <Link href="/" className="flex-shrink-0 flex items-center gap-4 group" title="Université Polytechnique de San-Pédro (UPSP)-ALUMNI - Accueil">
+              <Link href="/" className="flex-shrink-0 flex items-center gap-4 group" title="AEPS-ALUMNI - Accueil">
                 <div className="relative w-14 h-14 overflow-hidden rounded-[1.25rem] border-2 border-white bg-white p-0.5 shadow-xl transition-transform group-hover:scale-110 group-active:scale-95 duration-300">
                   <Image 
-                    src="https://sc01.alicdn.com/kf/A10cd1516dd12456686a3ce544d201eccS.jpeg" 
-                    alt="Université Polytechnique de San-Pédro (UPSP)-ALUMNI Logo" 
+                    src="https://sc01.alicdn.com/kf/A078326496bde42748f875c714f6ab1888.jpeg" 
+                    alt="AEPS-ALUMNI Logo" 
                     fill
                     className="object-contain"
                   />
                 </div>
-                <span className="text-lg sm:text-xl font-black text-white tracking-tighter transition-all group-hover:tracking-normal hidden md:inline">Université Polytechnique de San-Pédro (UPSP)-ALUMNI</span>
+                <span className="text-lg sm:text-xl font-black text-white tracking-tighter transition-all group-hover:tracking-normal hidden md:inline">AEPS-ALUMNI</span>
               </Link>
             </div>
             
@@ -152,8 +152,14 @@ const Navbar = () => {
                 )}
 
                 {user ? (
-                  <Link href="/profile" className="bg-white text-sky-600 hover:shadow-xl px-4 py-3 rounded-2xl transition-all transform active:scale-95 shadow-lg shadow-sky-900/10 flex items-center gap-2" title="Mon Profil">
-                    <UserIcon size={20} />
+                  <Link href="/profile" className="p-1 bg-white hover:shadow-xl rounded-2xl transition-all transform active:scale-95 shadow-lg shadow-sky-900/10 flex items-center overflow-hidden" title="Mon Profil">
+                    <div className="w-10 h-10 rounded-xl overflow-hidden bg-sky-50 flex items-center justify-center">
+                      {user.avatar ? (
+                        <img src={user.avatar} alt="Profil" className="w-full h-full object-cover" />
+                      ) : (
+                        <UserIcon size={20} className="text-sky-600" />
+                      )}
+                    </div>
                   </Link>
                 ) : (
                   <>

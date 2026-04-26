@@ -11,6 +11,7 @@ interface Member {
   last_name: string;
   promo: string;
   job: string;
+  avatar?: string;
   isNew?: boolean;
 }
 
@@ -64,7 +65,8 @@ export default function Responsable() {
       first_name: m.first_name,
       last_name: m.last_name,
       promo: m.promo,
-      job: m.job
+      job: m.job,
+      avatar: m.avatar
     })));
     setNews(storedNews);
     setJobs(storedJobs);
@@ -220,6 +222,7 @@ export default function Responsable() {
             <table className="w-full text-left border-collapse">
               <thead className="bg-gray-50 print:bg-white border-b border-gray-200">
                 <tr>
+                  <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest">Photo</th>
                   <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest">Nom & Prénom</th>
                   <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest">Promotion</th>
                   <th className="px-8 py-5 font-black text-gray-900 uppercase text-[10px] tracking-widest">Formation / Métier</th>
@@ -229,6 +232,17 @@ export default function Responsable() {
               <tbody className="divide-y divide-gray-100">
                 {members.map((member) => (
                   <tr key={member.id} className="hover:bg-gray-50/50 transition-colors print:hover:bg-transparent">
+                    <td className="px-8 py-5 whitespace-nowrap">
+                      <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-100 border border-gray-100">
+                        {member.avatar ? (
+                          <img src={member.avatar} alt="" className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-gray-400">
+                            <ShieldCheck size={20} />
+                          </div>
+                        )}
+                      </div>
+                    </td>
                     <td className="px-8 py-5 whitespace-nowrap">
                       <div className="font-black text-gray-900">{member.last_name} {member.first_name}</div>
                     </td>
