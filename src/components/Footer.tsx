@@ -1,4 +1,4 @@
-﻿import Image from 'next/image';
+import Image from 'next/image';
 
 const Footer = () => {
   return (
@@ -9,13 +9,13 @@ const Footer = () => {
             <div className="flex items-center gap-3 mb-4">
               <div className="relative w-10 h-10 overflow-hidden rounded-md border border-gray-200 bg-white p-0.5">
                 <Image 
-                  src="https://sc01.alicdn.com/kf/A10cd1516dd12456686a3ce544d201eccS.jpeg" 
-                  alt="Université Polytechnique de San-Pédro (UPSP)-ALUMNI Logo" 
+                  src="https://sc01.alicdn.com/kf/A078326496bde42748f875c714f6ab1888.jpeg" 
+                  alt="AEPS-ALUMNI Logo" 
                   fill
                   className="object-contain"
                 />
               </div>
-              <h3 className="text-sm font-bold text-gray-900 tracking-wider uppercase">Université Polytechnique de San-Pédro (UPSP)-ALUMNI</h3>
+              <h3 className="text-sm font-bold text-gray-900 tracking-wider uppercase">AEPS-ALUMNI</h3>
             </div>
             <p className="text-base text-gray-500 text-center md:text-left">
               Le réseau dynamique des anciens élèves de l&apos;Université Polytechnique de San-Pédro (UPSP).
@@ -37,7 +37,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 border-t border-gray-200 pt-8 text-center">
-          <p className="text-base text-gray-400">&copy; 2026 Université Polytechnique de San-Pédro (UPSP)-ALUMNI Inc. Tous droits réservés.</p>
+          <p className="text-base text-gray-400">&copy; 2026 AEPS-ALUMNI Inc. Tous droits réservés.</p>
         </div>
       </div>
     </footer>
