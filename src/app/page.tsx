@@ -1,4 +1,4 @@
-﻿import { ArrowRight, CheckCircle, Globe, GraduationCap, Users, Zap, Briefcase, Newspaper, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle, Globe, GraduationCap, Users, Zap, Briefcase, Newspaper, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -10,11 +10,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <div className="inline-flex items-center gap-2 bg-sky-50 text-sky-600 px-6 py-2 rounded-full font-black text-xs uppercase tracking-widest mb-8 border border-sky-100 shadow-xl shadow-sky-500/10">
             <Sparkles size={14} />
-            Le réseau d&apos;excellence de l&apos;Université Polytechnique de San-Pédro (UPSP)
+            AEPS-ALUMNI
           </div>
           <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black text-gray-900 tracking-tighter leading-[0.9]">
             Propulsez votre <br />
-            <span className="text-sky-500">Carrière avec Université Polytechnique de San-Pédro (UPSP)</span>
+            <span className="text-sky-500">Carrière avec AEPS-ALUMNI</span>
           </h1>
           <p className="mt-8 text-xl text-gray-500 font-bold max-w-2xl mx-auto leading-relaxed">
             Rejoignez la plateforme officielle des anciens élèves. <br />
@@ -38,62 +38,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 bg-gray-900 text-white relative z-10 -mt-10 mx-4 sm:mx-8 lg:mx-24 rounded-[3rem] shadow-2xl overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-sky-500/10 mix-blend-overlay"></div>
-        <div className="max-w-7xl mx-auto px-12 grid grid-cols-2 md:grid-cols-4 gap-12 text-center relative z-20">
-          <div>
-            <div className="text-4xl lg:text-5xl font-black text-sky-400 mb-2">+2500</div>
-            <p className="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Membres Actifs</p>
-          </div>
-          <div>
-            <div className="text-4xl lg:text-5xl font-black text-sky-400 mb-2">+450</div>
-            <p className="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Entreprises Partenaires</p>
-          </div>
-          <div>
-            <div className="text-4xl lg:text-5xl font-black text-sky-400 mb-2">+120</div>
-            <p className="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Événements / An</p>
-          </div>
-          <div>
-            <div className="text-4xl lg:text-5xl font-black text-sky-400 mb-2">95%</div>
-            <p className="text-gray-400 font-bold uppercase tracking-widest text-[10px]">Insertion Pro</p>
-          </div>
-        </div>
-      </section>
-
       {/* Features Section */}
       <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8 text-center md:text-left">
-            <div className="max-w-xl">
-              <h2 className="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight leading-none mb-6">
-                Un réseau, <br />
-                <span className="text-sky-500">Mille opportunités.</span>
-              </h2>
-              <p className="text-gray-500 font-bold text-lg leading-relaxed">
-                Université Polytechnique de San-Pédro (UPSP)-ALUMNI n&apos;est pas qu&apos;un annuaire. C&apos;est un accélérateur de réussite pour tous ses membres.
-              </p>
-            </div>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
               { 
                 icon: <Users className="text-sky-500" />, 
-                title: "Réseautage Élite", 
-                desc: "Connectez-vous avec des experts du secteur et échangez sur vos projets.",
+                title: "Réseautage", 
+                desc: "Connectez-vous avec les autres diplômés et échangez sur vos parcours professionnels.",
                 link: "/members"
               },
               { 
                 icon: <Briefcase className="text-sky-500" />, 
-                title: "Job Board Privé", 
-                desc: "Accédez à des offres d&apos;emploi exclusives partagées par les anciens pour les anciens.",
+                title: "Offres d'Emploi", 
+                desc: "Consultez les opportunités de carrière partagées au sein de la communauté.",
                 link: "/jobs"
               },
               { 
                 icon: <Newspaper className="text-sky-500" />, 
-                title: "News & Événements", 
-                desc: "Restez au courant des dernières tendances et ne manquez aucun gala ou webinaire.",
+                title: "Actualités", 
+                desc: "Restez informé des derniers événements et nouvelles du réseau.",
                 link: "/news"
               }
             ].map((feature, i) => (
@@ -114,8 +79,8 @@ export default function Home() {
       <section className="py-24 bg-sky-500 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-48 -mt-48 blur-3xl"></div>
         <div className="max-w-5xl mx-auto px-4 text-center text-white relative z-10">
-          <h2 className="text-4xl sm:text-6xl font-black mb-8 leading-none">Prêt à faire partie <br />de l&apos;aventure ?</h2>
-          <p className="text-sky-100 text-xl font-bold mb-12 max-w-2xl mx-auto">Inscrivez-vous dès aujourd&apos;hui et commencez à explorer les possibilités du réseau Université Polytechnique de San-Pédro (UPSP).</p>
+          <h2 className="text-4xl sm:text-6xl font-black mb-8 leading-none">Prêt à rejoindre <br />le réseau ?</h2>
+          <p className="text-sky-100 text-xl font-bold mb-12 max-w-2xl mx-auto">Inscrivez-vous dès aujourd&apos;hui et explorez les possibilités offertes par AEPS-ALUMNI.</p>
           <Link 
             href="/register" 
             className="inline-flex px-12 py-5 bg-white text-sky-600 font-black rounded-[2rem] hover:bg-sky-50 hover:scale-105 transition-all shadow-2xl shadow-sky-900/20 text-xl"
