@@ -18,7 +18,7 @@ const Footer = () => {
               <h3 className="text-sm font-bold text-gray-900 tracking-wider uppercase">AEPS-ALUMNI</h3>
             </div>
             <p className="text-base text-gray-500 text-center md:text-left">
-              Le réseau dynamique des anciens élèves de l&apos;Université Polytechnique de San-Pédro (UPSP).
+              Le réseau dynamique des anciens élèves de l&apos;Université Polytechnique de San-Pédro (AEPS-ALUMNI).
             </p>
           </div>
           <div>
