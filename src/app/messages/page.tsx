@@ -462,7 +462,7 @@ export default function Messages() {
         
         {/* Sidebar: Contacts List */}
         <div className={`w-full md:w-96 border-r border-gray-100 flex flex-col bg-white ${isMobileView && selectedContact ? 'hidden md:flex' : 'flex'}`}>
-          <div className="p-6 space-y-6">
+          <div className="p-6 space-y-6 flex-shrink-0">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-black text-black flex items-center gap-3 tracking-tight">
                 Messages
@@ -543,11 +543,11 @@ export default function Messages() {
         </div>
 
         {/* Chat Area */}
-        <div className={`flex-grow flex flex-col bg-white min-h-0 ${isMobileView && selectedContact ? 'flex' : 'hidden md:flex'}`}>
+        <div className={`flex-grow flex flex-col bg-white min-h-0 h-full ${isMobileView && selectedContact ? 'flex' : 'hidden md:flex'}`}>
           {selectedContact ? (
             <>
               {/* Header */}
-              <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-white z-10 shadow-sm">
+              <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-white z-10 shadow-sm flex-shrink-0">
                 <div className="flex items-center gap-4">
                   <button 
                     onClick={() => setIsMobileView(false)}
@@ -630,7 +630,7 @@ export default function Messages() {
               <div 
                 ref={scrollRef}
                 onScroll={handleScroll}
-                className="flex-grow overflow-y-auto p-8 space-y-10 bg-gray-50/30 min-h-0 overscroll-contain"
+                className="flex-1 overflow-y-auto p-8 space-y-10 bg-gray-50/30 min-h-0 overscroll-contain"
               >
                 {messages.length > 0 ? messages.map((msg) => (
                   <div key={msg.id} className={`flex items-end gap-3 ${msg.isMine ? 'flex-row-reverse' : 'flex-row'}`}>
@@ -694,7 +694,7 @@ export default function Messages() {
               </div>
 
               {/* Input Area */}
-              <div className="p-6 bg-white border-t border-gray-100">
+              <div className="p-6 bg-white border-t border-gray-100 flex-shrink-0">
                 {isRecording ? (
                   <div className="flex items-center gap-4 bg-sky-50 p-4 rounded-[2rem] animate-in slide-in-from-bottom-2 duration-300">
                     <div className="flex items-center gap-3 flex-grow pl-2">
