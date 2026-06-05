@@ -10,16 +10,10 @@ export default function Services() {
       link: "/members"
     },
     { 
-      icon: <Briefcase className="text-sky-500" />, 
-      title: "Opportunités de Carrière", 
-      desc: "Consultez et publiez des offres d'emploi réservées aux membres du réseau AEPS-ALUMNI.",
-      link: "/jobs"
-    },
-    { 
       icon: <Newspaper className="text-sky-500" />, 
-      title: "Actualités & Événements", 
-      desc: "Restez informé des conférences, webinaires et rencontres organisés par l'association.",
-      link: "/news"
+      title: "Actualités & Opportunités", 
+      desc: "Restez informé des activités du réseau et consultez les offres d'emploi réservées aux membres.",
+      link: "/feed"
     },
     { 
       icon: <GraduationCap className="text-sky-500" />, 

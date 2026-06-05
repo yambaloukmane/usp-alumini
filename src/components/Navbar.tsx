@@ -64,11 +64,8 @@ const Navbar = () => {
                       <Link href="/" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Accueil">
                         <Home size={18} className="sm:w-5 sm:h-5" />
                       </Link>
-                      <Link href="/news" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Actualités">
+                      <Link href="/feed" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Actualités & Emplois">
                         <Newspaper size={18} className="sm:w-5 h-5" />
-                      </Link>
-                      <Link href="/jobs" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link" title="Emplois">
-                        <Briefcase size={18} className="sm:w-5 h-5" />
                       </Link>
                       <Link href="/messages" className="text-white hover:bg-white/10 p-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl flex items-center transition-all group/link relative" title="Messages">
                         <MessageSquare size={18} className="sm:w-5 sm:h-5" />
