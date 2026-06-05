@@ -56,9 +56,9 @@ export default function Home() {
                   <div className="absolute -inset-4 bg-sky-500/20 rounded-[3.5rem] blur-2xl group-hover:bg-sky-500/30 transition-all duration-500"></div>
                   <div className="relative aspect-square rounded-[3rem] overflow-hidden border-8 border-white shadow-2xl transform -rotate-2 group-hover:rotate-0 transition-transform duration-700">
                     <img 
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&h=600&auto=format&fit=crop" 
+                      src="https://avatar.iran.liara.run/public/boy" 
                       alt="Fondateur AEPS" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 p-4"
                     />
                   </div>
                 </div>
