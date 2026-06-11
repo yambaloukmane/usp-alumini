@@ -6,9 +6,13 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-sky-200 rounded-full blur-[120px] opacity-30 animate-pulse"></div>
-          <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-sky-300 rounded-full blur-[100px] opacity-20"></div>
+        <div className="absolute inset-0 -z-10">
+          <img 
+            src="https://sc04.alicdn.com/kf/A828d107947df4ea0be8bff74858715a0m.jpeg" 
+            alt="Campus Background" 
+            className="w-full h-full object-cover opacity-30"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/40 to-white"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
