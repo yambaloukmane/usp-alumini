@@ -110,6 +110,45 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Campus Gallery Section */}
+      <section className="py-24 bg-gray-50/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-6xl font-black text-gray-900 tracking-tighter mb-6">
+              Un Cadre d&apos;Apprentissage <br />
+              <span className="text-sky-500 italic">Unique.</span>
+            </h2>
+            <p className="text-gray-500 font-bold text-lg max-w-2xl mx-auto">
+              Découvrez l&apos;environnement d&apos;excellence de la Prépa de San-Pédro, là où tout a commencé.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="relative group overflow-hidden rounded-[3rem] shadow-2xl h-[500px]">
+              <img 
+                src="https://sc04.alicdn.com/kf/A3b1d5312ae584258a41d3bc8f2e99285m.jpeg" 
+                alt="Campus San-Pédro Building" 
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-12">
+                <p className="text-white font-black text-2xl tracking-tight">Infrastructures Modernes</p>
+              </div>
+            </div>
+            
+            <div className="relative group overflow-hidden rounded-[3rem] shadow-2xl h-[500px]">
+              <img 
+                src="https://sc04.alicdn.com/kf/A58e9cda3f1f245a89e6a588d688287b81.jpg" 
+                alt="Campus San-Pédro Life" 
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-12">
+                <p className="text-white font-black text-2xl tracking-tight">Vie Étudiante & Excellence</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,13 +164,13 @@ export default function Home() {
                 icon: <Briefcase className="text-sky-500" />, 
                 title: "Offres d'Emploi", 
                 desc: "Consultez les opportunités de carrière partagées au sein de la communauté.",
-                link: "/jobs"
+                link: "/feed"
               },
               { 
                 icon: <Newspaper className="text-sky-500" />, 
                 title: "Actualités", 
                 desc: "Restez informé des derniers événements et nouvelles du réseau.",
-                link: "/news"
+                link: "/feed"
               }
             ].map((feature, i) => (
               <Link key={i} href={feature.link} className="p-10 border-2 border-gray-50 rounded-[2.5rem] hover:border-sky-500 hover:shadow-2xl transition-all group bg-white shadow-xl shadow-gray-100">
