@@ -10,9 +10,8 @@ export default function Home() {
           <img 
             src="https://sc04.alicdn.com/kf/A828d107947df4ea0be8bff74858715a0m.jpeg" 
             alt="Campus Background" 
-            className="w-full h-full object-cover opacity-80"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
