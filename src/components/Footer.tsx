@@ -38,6 +38,7 @@ const Footer = () => {
         </div>
         <div className="mt-8 border-t border-gray-200 pt-8 text-center">
           <p className="text-base text-gray-400">&copy; 2026 AEPS-ALUMNI Inc. Tous droits réservés.</p>
+          <p className="mt-2 text-sm text-gray-400 font-medium italic">Développé par YAMBA Loukmane.</p>
         </div>
       </div>
     </footer>
