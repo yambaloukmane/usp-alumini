@@ -158,7 +158,7 @@ export default function Responsable() {
           </form>
           <div className="mt-6 p-4 bg-amber-50 border border-amber-100 rounded-lg flex items-start gap-3">
             <AlertCircle className="text-amber-500 flex-shrink-0" size={18} />
-            <p className="text-[12px] text-amber-700">Note: Le code d'accès est <strong>AEPS2024</strong>.</p>
+            <p className="text-[12px] text-amber-700">Note: L'accès est réservé aux responsables autorisés.</p>
           </div>
         </div>
       </div>
