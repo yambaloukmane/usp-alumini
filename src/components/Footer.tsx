@@ -9,7 +9,7 @@ const Footer = () => {
             <div className="flex items-center gap-3 mb-4">
               <div className="relative w-10 h-10 overflow-hidden rounded-md border border-gray-200 bg-white p-0.5">
                 <Image 
-                  src="https://sc01.alicdn.com/kf/A078326496bde42748f875c714f6ab1888.jpeg" 
+                  src="https://sc04.alicdn.com/kf/A7fb6672ac66c444ca91515455e77e663T.jpg" 
                   alt="AEPS-ALUMNI Logo" 
                   fill
                   className="object-contain"

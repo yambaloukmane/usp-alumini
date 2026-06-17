@@ -44,7 +44,7 @@ const Navbar = () => {
               <Link href="/" className="flex-shrink-0 flex items-center gap-4 group" title="AEPS-ALUMNI - Accueil">
                 <div className="relative w-14 h-14 overflow-hidden rounded-[1.25rem] border-2 border-white bg-white p-0.5 shadow-xl transition-transform group-hover:scale-110 group-active:scale-95 duration-300">
                   <Image 
-                    src="https://sc01.alicdn.com/kf/A078326496bde42748f875c714f6ab1888.jpeg" 
+                    src="https://sc04.alicdn.com/kf/A7fb6672ac66c444ca91515455e77e663T.jpg" 
                     alt="AEPS-ALUMNI Logo" 
                     fill
                     className="object-contain"
