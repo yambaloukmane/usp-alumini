@@ -7,9 +7,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start">
             <div className="flex items-center gap-3 mb-4">
-              <div className="relative w-10 h-10 overflow-hidden rounded-md border border-gray-200 bg-white p-0.5">
+              <div className="relative w-12 h-12 overflow-hidden rounded-full border border-gray-200 bg-white p-0.5 shadow-sm">
                 <Image 
-                  src="https://sc04.alicdn.com/kf/A7fb6672ac66c444ca91515455e77e663T.jpg" 
+                  src="https://sc04.alicdn.com/kf/A5ab3ad97a8484f7981e0d7642485f16e0.jpg" 
                   alt="AEPS-ALUMNI Logo" 
                   fill
                   className="object-contain"

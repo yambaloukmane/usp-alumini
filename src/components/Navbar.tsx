@@ -42,9 +42,9 @@ const Navbar = () => {
           <div className="flex justify-between h-20">
             <div className="flex items-center">
               <Link href="/" className="flex-shrink-0 flex items-center gap-4 group" title="AEPS-ALUMNI - Accueil">
-                <div className="relative w-14 h-14 overflow-hidden rounded-[1.25rem] border-2 border-white bg-white p-0.5 shadow-xl transition-transform group-hover:scale-110 group-active:scale-95 duration-300">
+                <div className="relative w-14 h-14 overflow-hidden rounded-full border-2 border-white bg-white p-0.5 shadow-xl transition-transform group-hover:scale-110 group-active:scale-95 duration-300">
                   <Image 
-                    src="https://sc04.alicdn.com/kf/A7fb6672ac66c444ca91515455e77e663T.jpg" 
+                    src="https://sc04.alicdn.com/kf/A5ab3ad97a8484f7981e0d7642485f16e0.jpg" 
                     alt="AEPS-ALUMNI Logo" 
                     fill
                     className="object-contain"
