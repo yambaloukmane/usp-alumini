@@ -60,6 +60,15 @@ export default function Members() {
       <div className="text-center mb-16">
         <h2 className="text-4xl font-black text-gray-900 tracking-tight">Annuaire des Membres</h2>
         <p className="mt-4 text-xl text-gray-500 font-medium">Connectez-vous avec l&apos;élite de l&apos;AEPS-ALUMNI à travers le monde.</p>
+        
+        <div className="mt-8 flex justify-center">
+          <div className="bg-sky-50 text-sky-600 px-6 py-3 rounded-2xl font-black text-sm flex items-center gap-3 border border-sky-100 shadow-xl shadow-sky-500/5 transition-all hover:scale-105">
+            <div className="w-8 h-8 bg-sky-500 text-white rounded-lg flex items-center justify-center shadow-lg shadow-sky-500/20">
+              <Users size={18} />
+            </div>
+            <span>{members.length} membres officiellement inscrits</span>
+          </div>
+        </div>
       </div>
 
       <div className="max-w-4xl mx-auto mb-16 space-y-4">
