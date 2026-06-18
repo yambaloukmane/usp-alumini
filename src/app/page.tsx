@@ -6,11 +6,11 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 -z-10 bg-white/60">
           <img 
             src="https://sc04.alicdn.com/kf/A828d107947df4ea0be8bff74858715a0m.jpeg" 
             alt="Campus Background" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain opacity-50"
           />
         </div>
 
