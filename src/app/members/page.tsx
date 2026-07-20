@@ -1,8 +1,8 @@
-﻿"use client";
+"use client";
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Search, User as UserIcon, Sparkles, MapPin, Briefcase, Filter, X, ChevronDown } from "lucide-react";
+import { Search, User as UserIcon, Users, Sparkles, MapPin, Briefcase, Filter, X, ChevronDown } from "lucide-react";
 import { dataService } from "@/lib/dataService";
 
 interface Member {
