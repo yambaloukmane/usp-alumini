@@ -19,7 +19,7 @@ export default function Home() {
             <div className="bg-gray-900/90 backdrop-blur-md text-white px-8 py-3 rounded-2xl border border-white/20 shadow-2xl flex items-center gap-3 mb-6 group hover:scale-105 transition-all">
               <div className="w-2 h-2 bg-sky-400 rounded-full animate-ping"></div>
               <p className="text-sm md:text-base font-black tracking-tight leading-tight uppercase italic">
-                Initiative du comité social et du bureau de la 4ème promo                 <br className="hidden md:block" />
+                 De la 4ème promo                 <br className="hidden md:block" />
               </p>
             </div>
             

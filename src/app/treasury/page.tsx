@@ -18,7 +18,7 @@ export default function Treasury() {
           <div className="space-y-4">
             <h1 className="text-4xl lg:text-5xl font-black text-gray-900 tracking-tighter">
               Page en <br />
-              <span className="text-sky-500 italic">E cours de développement.</span>
+              <span className="text-sky-500 italic">Encours de développement.</span>
             </h1>
             <p className="text-gray-500 font-bold text-lg leading-relaxed max-w-sm mx-auto">
               Nous préparons un espace sécurisé pour la gestion des cotisations et des dons de l&apos;AEPS-ALUMNI.
