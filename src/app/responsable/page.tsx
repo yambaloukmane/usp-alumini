@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { Trash2, FileDown, ShieldCheck, AlertCircle, Newspaper, Briefcase, Plus, X, Image as ImageIcon } from "lucide-react";
