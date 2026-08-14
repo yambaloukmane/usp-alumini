@@ -24,6 +24,7 @@ export default function Members() {
   const [members, setMembers] = useState<Member[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<Member | null>(null);
   
   // États des filtres
   const [filterPromo, setFilterPromo] = useState("");
@@ -199,7 +200,10 @@ export default function Members() {
             </div>
 
             <div className="px-6 py-5 bg-gray-50 border-t border-gray-100 mt-auto">
-              <button className="w-full py-3 bg-white text-sky-600 border-2 border-sky-100 rounded-2xl font-black hover:bg-sky-500 hover:text-white hover:border-sky-500 transition-all transform active:scale-95 shadow-sm text-sm">
+              <button 
+                onClick={() => setSelectedMember(member)}
+                className="w-full py-3 bg-white text-sky-600 border-2 border-sky-100 rounded-2xl font-black hover:bg-sky-500 hover:text-white hover:border-sky-500 transition-all transform active:scale-95 shadow-sm text-sm"
+              >
                 Voir le profil complet
               </button>
             </div>
@@ -214,6 +218,98 @@ export default function Members() {
           </div>
           <h3 className="text-2xl font-black text-gray-900 mb-2">Aucun résultat</h3>
           <p className="text-gray-500 font-medium">Réessayez avec d&apos;autres critères de recherche.</p>
+        </div>
+      )}
+
+      {/* Modal Profil Complet */}
+      {selectedMember && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 bg-gray-900/60 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setSelectedMember(null)}
+        >
+          <div 
+            className="relative w-full max-w-lg bg-white rounded-[2.5rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Bannière */}
+            <div className="h-32 bg-gradient-to-r from-sky-500 to-sky-600 relative">
+              <button 
+                onClick={() => setSelectedMember(null)}
+                className="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/30 backdrop-blur rounded-full flex items-center justify-center text-white transition-all"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Avatar */}
+            <div className="px-8 -mt-14 relative">
+              <div className="w-28 h-28 bg-sky-50 rounded-3xl p-1.5 shadow-xl ring-4 ring-white relative overflow-hidden flex items-center justify-center text-sky-500">
+                {selectedMember.avatar ? (
+                  <img src={selectedMember.avatar} alt={selectedMember.first_name} className="w-full h-full object-cover rounded-2xl" />
+                ) : (
+                  <UserIcon size={48} />
+                )}
+              </div>
+            </div>
+
+            {/* Contenu */}
+            <div className="px-8 py-6 space-y-6">
+              <div>
+                <h3 className="text-3xl font-black text-gray-900 tracking-tight">
+                  {selectedMember.first_name} {selectedMember.last_name}
+                </h3>
+                <p className="text-sky-600 font-black text-sm mt-1">
+                  Promotion {selectedMember.promo}
+                </p>
+              </div>
+
+              <div className="bg-gray-50 rounded-3xl p-6 space-y-4">
+                <div className="flex items-start gap-3">
+                  <Briefcase size={20} className="text-sky-500 mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-xs font-black text-gray-400 uppercase tracking-wider">Métier</p>
+                    <p className="font-bold text-gray-800">{selectedMember.job}</p>
+                  </div>
+                </div>
+                {selectedMember.sector && (
+                  <div className="flex items-start gap-3">
+                    <Sparkles size={20} className="text-sky-500 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs font-black text-gray-400 uppercase tracking-wider">Secteur</p>
+                      <p className="font-bold text-gray-800">{selectedMember.sector}</p>
+                    </div>
+                  </div>
+                )}
+                {(selectedMember.city || selectedMember.country) && (
+                  <div className="flex items-start gap-3">
+                    <MapPin size={20} className="text-sky-500 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs font-black text-gray-400 uppercase tracking-wider">Localisation</p>
+                      <p className="font-bold text-gray-800">
+                        {selectedMember.city}{selectedMember.city && selectedMember.country ? ', ' : ''}{selectedMember.country}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {selectedMember.bio && (
+                <div>
+                  <h4 className="text-sm font-black text-gray-400 uppercase tracking-wider mb-3">À propos</h4>
+                  <p className="text-gray-600 font-medium leading-relaxed italic bg-sky-50/50 rounded-2xl p-5 border border-sky-100">
+                    "{selectedMember.bio}"
+                  </p>
+                </div>
+              )}
+
+              <button 
+                onClick={() => setSelectedMember(null)}
+                className="w-full py-4 bg-sky-500 text-white rounded-2xl font-black hover:bg-sky-600 transition-all transform active:scale-95 shadow-xl shadow-sky-500/20"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
